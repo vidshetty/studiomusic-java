@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">StudioMusic</string>
+    <string name="logoTitle">Studio</string>
+    <string name="whitelogo">White Logo</string>
+    <string name="top_header">Music For Everyone.</string>
+    <string name="bottom_header">For Free.</string>
+    <string name="google_login">Continue with Google</string>
+    <string name="linkedin">Connect on LinkedIn</string>
+    <string name="info">
+        StudioMusic is a music streaming app solely made as a project showcasing skill sets and for fun.
+        StudioMusic does not own or have copyrights of any of the songs on the platform.
+        We do not make any money out of this.
+        Please do not sue us.
+    </string>
+    <string name="CLIENT_ID">935085122781-hom9nlginog56hteo27hddf57leg6u6i.apps.googleusercontent.com</string>
+    <string name="sign_out">Sign Out</string>
+</resources>
