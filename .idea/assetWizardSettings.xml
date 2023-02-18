@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -11,11 +16,27 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialiconsoutlined/library_books/outline_library_books_24.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="studiomusic_whiteblack" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/latest-whiteblack.svg" />
+                            <entry key="color" value="eeeeee" />
+                            <entry key="outputName" value="ic_studiomusic_white" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/studiomusic_white.svg" />
                           </map>
                         </option>
                       </PersistentState>

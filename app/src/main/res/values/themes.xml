@@ -30,7 +30,23 @@
         <item name="android:navigationBarColor">@color/black</item>
     </style>
 
+    <style name="SplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_screen</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/no_action_bar</item>
+    </style>
+
     <style name="profileImage">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="Theme.StudioMusic.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.StudioMusic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.StudioMusic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

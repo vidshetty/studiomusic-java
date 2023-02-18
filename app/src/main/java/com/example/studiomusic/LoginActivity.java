@@ -2,19 +2,22 @@ package com.example.studiomusic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.studiomusic.API_Controller.API;
+import com.example.studiomusic.API_Controller.APIService;
+import com.example.studiomusic.SP_Controller.SPService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,32 +25,101 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private GoogleSignInOptions gso;
-    private GoogleSignInClient signInClient;
+    private Loader loader = null;
+    private GoogleSignInClient signInClient = null;
+    private GoogleSignInAccount account = null;
+    private final int RC_SIGN_IN = 1000;
+    private Vibrator vibrator = null;
 
-    private static int RC_SIGN_IN = 100;
+    private void accountCheckResponse(JSONObject response) {
+
+        SharedPreferences token = SPService.TOKEN(this);
+        SharedPreferences.Editor editor = token.edit();
+        try {
+            editor.putString("accessToken", response.getString("accessToken"));
+            editor.putString("refreshToken", response.getString("refreshToken"));
+            editor.apply();
+            API.setHeaders(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Token shared preferences error!", Toast.LENGTH_LONG).show();
+            loader.stopLoading();
+            return;
+        }
+
+        SharedPreferences user = SPService.USER(this);
+        editor = user.edit();
+        try {
+            editor.putString("_id", response.getString("_id"));
+            editor.putString("name", response.getString("name"));
+            editor.putString("email", response.getString("email"));
+            editor.putString("picture", response.getString("picture"));
+            editor.apply();
+            API.setHeaders(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "User shared preferences error!", Toast.LENGTH_LONG).show();
+            loader.stopLoading();
+            return;
+        }
+
+        loader.stopLoading();
+//        Toast.makeText(this, "You are logged in " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, ProfileCheckActivity.class));
+        finish();
+
+    }
+
+    private void accountCheckError(VolleyError err) {
+        Toast.makeText(this, "account check error!", Toast.LENGTH_LONG).show();
+        loader.stopLoading();
+    }
+
+    private void accountCheck() {
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("name", account.getDisplayName());
+            obj.put("email", account.getEmail());
+            obj.put("id", account.getId());
+            obj.put("photoUrl", account.getPhotoUrl() == null ? JSONObject.NULL : account.getPhotoUrl());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "JSONObject error!", Toast.LENGTH_LONG).show();
+            loader.stopLoading();
+            return;
+        }
+
+        APIService.accountCheck(this, obj.toString(), this::accountCheckResponse, this::accountCheckError);
+
+    }
 
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent intent) {
+
         super.onActivityResult(reqCode,resultCode,intent);
         if (reqCode != RC_SIGN_IN) return;
 
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+        loader.startLoading();
+
         try {
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-            Toast.makeText(this, "You are logged in " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        } catch(ApiException err) {
-            Toast.makeText(this, "Error signing in!", Toast.LENGTH_SHORT).show();
+            account = task.getResult(ApiException.class);
         }
+        catch(ApiException err) {
+            Toast.makeText(this, "Error signing in!", Toast.LENGTH_LONG).show();
+            loader.stopLoading();
+            return;
+        }
+
+        accountCheck();
+
     }
 
     @Override
@@ -56,31 +128,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.CLIENT_ID))
+        loader = new Loader(this);
+        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         signInClient = GoogleSignIn.getClient(this, gso);
 
         Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonClick(view);
-            }
-        });
+        button.setOnClickListener(this::buttonClick);
 
         Button linkedIn = findViewById(R.id.linkedin);
-        linkedIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/vidhatashetty/")));
-            }
+        linkedIn.setOnClickListener(view -> {
+            vibrator.vibrate(100);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.linkedin_uri))));
         });
 
     }
 
     private void buttonClick(View view) {
+        vibrator.vibrate(100);
         Intent signInIntent = signInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }

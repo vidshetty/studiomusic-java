@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilecheck_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileCheckActivity"
+    android:background="@color/black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profileSectionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/profilecheck_profileview">
+
+        <RelativeLayout
+            android:id="@+id/profileImageContainer"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileCheckImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:shapeAppearanceOverlay="@style/profileImage"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/profileUsername"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="120dp"
+            android:paddingRight="20dp"
+            android:textSize="25sp"
+            android:gravity="bottom"
+            android:fontFamily="@font/anton_regular"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textFontWeight="700"/>
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="120dp"
+            android:textSize="18sp"
+            android:textColor="@color/light_white"
+            android:textFontWeight="300"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/periodTextContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/profileSectionContainer"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/periodText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:height="60dp"
+            android:minHeight="60dp"
+            android:padding="20dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textFontWeight="500"
+            android:ellipsize="end"
+            android:maxLines="2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/username_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/periodTextContainer"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/username_edittext"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:hint="Enter username"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_white"
+        android:textCursorDrawable="@drawable/username_edittext_cursor"
+        android:visibility="gone"
+        android:textSelectHandle="@drawable/username_edittext_cursor"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:maxLines="1"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/profilecheck_continue"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/profilecheck_continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/continue_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profilecheck_signout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="invisible"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/profilecheck_signout"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_marginBottom="128dp"
+        android:background="@drawable/login_button_black"
+        android:text="@string/sign_out"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

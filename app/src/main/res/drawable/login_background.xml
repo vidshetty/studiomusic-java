@@ -4,5 +4,5 @@
         android:startColor="@color/login"
         android:endColor="@color/black"
         android:angle="@integer/material_motion_duration_medium_1"
-        android:type="linear"></gradient>
+        android:type="linear" />
 </shape>

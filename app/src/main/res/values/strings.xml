@@ -12,6 +12,21 @@
         We do not make any money out of this.
         Please do not sue us.
     </string>
-    <string name="CLIENT_ID">935085122781-hom9nlginog56hteo27hddf57leg6u6i.apps.googleusercontent.com</string>
     <string name="sign_out">Sign Out</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    <string name="prod_server">http://192.168.29.176:5000/android</string>-->
+<!--    <string name="prod_server">http://192.168.1.66:5000/android</string>-->
+    <string name="prod_server">https://studiomusic.app/android</string>
+    <string name="prod_server_media">https://studiomusic.app/listen</string>
+    <string name="linkedin_uri">https://www.linkedin.com/in/vidhatashetty/</string>
+    <string name="profilecheck_continue">Continue</string>
+    <string name="title_activity_fullscreen_loader">FullscreenLoader</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
