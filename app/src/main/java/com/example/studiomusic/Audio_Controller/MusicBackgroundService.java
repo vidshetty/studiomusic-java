@@ -1,37 +1,28 @@
 package com.example.studiomusic.Audio_Controller;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaMetadata;
 import android.media.MediaPlayer;
 import android.media.session.MediaSession;
-import android.media.session.PlaybackState;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.media.MediaMetadataCompat;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationChannelCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.media.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.studiomusic.MusicData.Track_Test;
 import com.example.studiomusic.R;
 
 import java.io.IOException;
@@ -42,13 +33,34 @@ public class MusicBackgroundService extends Service {
     private static int REPEAT = 1;
 
     private MediaPlayer mp = null;
-    private Track track = Track.getDetails();
+    private Track_Test track = Track_Test.getDetails();
 
     private MediaSession mediaSession = null;
     private Notification.MediaStyle mediaStyle = null;
     private NotificationManager notificationManager = null;
     private Notification.Builder notificationBuilder = null;
     private MediaMetadata.Builder metadataBuilder = null;
+    private AudioManager audioManager = null;
+    private AudioAttributes audioAttributes = null;
+    private AudioFocusRequest audioFocusRequest = null;
+
+    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int audioFocusChanged) {
+            switch (audioFocusChanged) {
+                case AudioManager.AUDIOFOCUS_LOSS:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    pause();
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN:
+                case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
+                    play();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public class MusicBackgroundServiceBinder extends Binder {
         public MusicBackgroundService getService() {
@@ -72,13 +84,21 @@ public class MusicBackgroundService extends Service {
         mediaSession = new MediaSession(getApplicationContext(), "now_playing");
         mediaSession.setActive(true);
         mediaStyle = new Notification.MediaStyle().setMediaSession(mediaSession.getSessionToken());
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+        audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setAudioAttributes(audioAttributes)
+                .setOnAudioFocusChangeListener(onAudioFocusChangeListener)
+                .build();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(tag, "background service start command");
         return super.onStartCommand(intent, flags, startId);
-//        return START_STICKY;
     }
 
     @Override
@@ -129,11 +149,10 @@ public class MusicBackgroundService extends Service {
                 .setOnlyAlertOnce(true);
 
         metadataBuilder = new MediaMetadata.Builder()
-                .putString(MediaMetadata.METADATA_KEY_TITLE, track.album)
+                .putString(MediaMetadata.METADATA_KEY_TITLE, track.title)
                 .putString(MediaMetadata.METADATA_KEY_ALBUM, track.album)
                 .putString(MediaMetadata.METADATA_KEY_ARTIST, track.artist)
                 .putString(MediaMetadata.METADATA_KEY_ALBUM_ARTIST, track.albumArtist);
-//                .putLong(MediaMetadata.METADATA_KEY_DURATION, mp.getDuration());
 
         Glide.with(getApplicationContext())
             .asBitmap()
@@ -155,7 +174,11 @@ public class MusicBackgroundService extends Service {
     }
 
     public void setUrl(String url, MediaPlayer.OnPreparedListener onPreparedListener) {
-        if (mp == null) mp = new MediaPlayer();
+        release();
+        if (mp == null) {
+            mp = new MediaPlayer();
+            mp.setAudioAttributes(audioAttributes);
+        }
         try {
 
             mp.setDataSource(track.url);
@@ -169,8 +192,6 @@ public class MusicBackgroundService extends Service {
             });
             mp.setOnCompletionListener(this::repeatFunc);
 
-            createNotification();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,24 +200,32 @@ public class MusicBackgroundService extends Service {
     public void play() {
         Log.d(tag, "background service play");
         if (mp == null) return;
-        mp.start();
+        int requestResult = audioManager.requestAudioFocus(audioFocusRequest);
+        if (requestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mp.start();
+        }
     }
 
     public void pause() {
         Log.d(tag, "background service pause");
         if (!mp.isPlaying()) return;
         mp.pause();
+        audioManager.abandonAudioFocusRequest(audioFocusRequest);
     }
 
     public void stop() {
         Log.d(tag, "background service stop");
         if (mp.isPlaying()) mp.pause();
-        mp.seekTo(0);
+        release();
     }
 
     public boolean isPlaying() {
         if (mp == null) return false;
         return mp.isPlaying();
+    }
+
+    public boolean isPrepared() {
+        return mp != null;
     }
 
 }

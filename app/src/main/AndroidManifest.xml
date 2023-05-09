@@ -14,53 +14,77 @@
         android:supportsRtl="true"
         android:theme="@style/no_action_bar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".AlbumView.AlbumViewActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
 
-        <service android:name=".Audio_Controller.MusicBackgroundService"
-            android:exported="false"
-            android:enabled="true"/>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data-->
+<!--                    android:host="studiomusic.app"-->
+<!--                    android:scheme="https"-->
+<!--                    android:pathPrefix="/player/album"/>-->
+<!--                <data-->
+<!--                    android:host="studiomusic.app"-->
+<!--                    android:scheme="http"-->
+<!--                    android:pathPrefix="/player/album"/>-->
+<!--            </intent-filter>-->
+
+        </activity>
+
+        <service
+            android:name=".Audio_Controller.MusicBackgroundService"
+            android:enabled="true"
+            android:exported="false" />
 
         <activity
-            android:name=".ProfileCheckActivity"
+            android:name=".ProfileCheck.ProfileCheckActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar_login" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Profile.ProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".SplashScreen.SplashScreenActivity"
             android:exported="true"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/SplashScreenTheme">
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data-->
+<!--                    android:host="studiomusic.app"-->
+<!--                    android:scheme="https"-->
+<!--                    android:path=""/>-->
+<!--                <data-->
+<!--                    android:host="studiomusic.app"-->
+<!--                    android:scheme="http"-->
+<!--                    android:path=""/>-->
+<!--            </intent-filter>-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="studiomusic.app"
-                    android:scheme="https" />
-                <data
-                    android:host="studiomusic.app"
-                    android:scheme="http" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:name=".Main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar" />

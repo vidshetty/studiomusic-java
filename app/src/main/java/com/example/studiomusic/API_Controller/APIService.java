@@ -3,21 +3,15 @@ package com.example.studiomusic.API_Controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.studiomusic.Common.Common;
-import com.example.studiomusic.Loader;
-import com.example.studiomusic.LoginActivity;
-import com.example.studiomusic.ProfileCheckActivity;
+import com.example.studiomusic.Common.Loader;
+import com.example.studiomusic.ProfileCheck.ProfileCheckActivity;
 import com.example.studiomusic.R;
-import com.example.studiomusic.SP_Controller.SPService;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,15 +24,43 @@ public class APIService {
         Loader loader = new Loader((Activity) context);
         loader.startLoading();
         Common.signOut(context, loader);
-        Toast.makeText(context, "Please log in!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Your access has expired!", Toast.LENGTH_SHORT).show();
     }
 
     private static void goToProfileCheck(Context context) {
         ((Activity) context).finishAffinity();
         context.startActivity(new Intent(context, ProfileCheckActivity.class));
+        Toast.makeText(context, "Your access has expired!", Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isAuthOrTimeError(VolleyError err) {
+
+        if (err.networkResponse == null) return false;
+
+        String statusCode = String.valueOf(err.networkResponse.statusCode);
+        if (!statusCode.equals("500")) return false;
+
+        String body = new String(err.networkResponse.data);
+
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        try {
+            return obj.getBoolean("middleware");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     public static void errorHandler(Context context, VolleyError err) {
+
         if (err.networkResponse == null) return;
 
         String statusCode = String.valueOf(err.networkResponse.statusCode);
@@ -71,6 +93,7 @@ public class APIService {
 
         if (type == 1) goToLogin(context);
         else if (type == 2) goToProfileCheck(context);
+
     }
 
     public static void checkServer(
@@ -157,6 +180,61 @@ public class APIService {
                 Request.Method.POST,
                 context.getString(R.string.prod_server) + "/auth/requestAccess",
                 reqBody,
+                resListener,
+                errorListener
+        );
+    }
+
+    public static void fetchLibrary(
+            Context context,
+            JSONObject queryParams,
+            Response.Listener<JSONObject> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        try {
+            String queryString = "?page=" + queryParams.getInt("page");
+            new API(context).JsonObjectRequest(
+                    Request.Method.GET,
+                    context.getString(R.string.prod_server) + "/api/getLibrary" + queryString,
+                    null,
+                    resListener,
+                    errorListener
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getAlbum(
+            Context context,
+            JSONObject queryParams,
+            Response.Listener<JSONObject> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        try {
+            String queryString = "?albumId=" + queryParams.getString("albumId");
+            new API(context).JsonObjectRequest(
+                    Request.Method.GET,
+                    context.getString(R.string.prod_server) + "/api/getAlbumDetails" + queryString,
+                    null,
+                    resListener,
+                    errorListener
+            );
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getHomeAlbums(
+            Context context,
+            Response.Listener<JSONObject> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        new API(context).JsonObjectRequest(
+                Request.Method.GET,
+                context.getString(R.string.prod_server) + "/api/getHomeAlbums",
+                null,
                 resListener,
                 errorListener
         );

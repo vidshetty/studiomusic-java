@@ -27,6 +27,7 @@ public class MusicApplication extends Application {
     @Override
     public void onTerminate() {
         Log.d("servicelog", "app on terminate");
+        MusicService.getInstance(getApplicationContext()).release();
         super.onTerminate();
     }
 

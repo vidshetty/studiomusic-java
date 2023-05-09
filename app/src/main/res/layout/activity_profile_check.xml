@@ -5,7 +5,7 @@
     android:id="@+id/profilecheck_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileCheckActivity"
+    tools:context=".ProfileCheck.ProfileCheckActivity"
     android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout

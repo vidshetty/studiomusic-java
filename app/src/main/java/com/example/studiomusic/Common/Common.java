@@ -9,15 +9,21 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.studiomusic.API_Controller.APIService;
 import com.example.studiomusic.Audio_Controller.MusicService;
-import com.example.studiomusic.Loader;
-import com.example.studiomusic.LoginActivity;
+import com.example.studiomusic.Common.Loader;
+import com.example.studiomusic.Login.LoginActivity;
+import com.example.studiomusic.MusicData.Album;
+import com.example.studiomusic.MusicData.Track;
 import com.example.studiomusic.SP_Controller.SPService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Common {
 
@@ -44,7 +50,7 @@ public class Common {
         context.startActivity(new Intent(context, LoginActivity.class));
         ((Activity) context).finishAffinity();
 //        MusicService.getInstance(context).stopService();
-        MusicService.getInstance(context.getApplicationContext()).release();
+//        MusicService.getInstance(context.getApplicationContext()).release();
 
     }
 
@@ -72,6 +78,74 @@ public class Common {
                 err -> signOutError(err, context, loader)
         );
 
+    }
+
+    public static Track buildTrack(JSONObject track_data) {
+        try {
+
+            Track.Builder track_builder = new Track.Builder();
+
+            track_builder.setTrackId(track_data.getString("_trackId"))
+                    .setTitle(track_data.getString("Title"))
+                    .setArtist(track_data.getString("Artist"))
+                    .setDuration(track_data.getString("Duration"))
+                    .setUrl(track_data.getString("url"))
+                    .setLyrics(track_data.getBoolean("lyrics"))
+                    .setSync(track_data.getBoolean("sync"))
+                    .setAlbumId(track_data.getString("_albumId"))
+                    .setAlbum(track_data.getString("Album"))
+                    .setColor(track_data.getString("Color"))
+                    .setReleaseDate(track_data.getString("releaseDate"))
+                    .setThumbnail(track_data.getString("Thumbnail"))
+                    .setYear(track_data.getString("Year"));
+
+            return track_builder.build();
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Album buildAlbum(JSONObject data) {
+        try {
+
+            JSONArray each_tracks = data.getJSONArray("Tracks");
+
+            Album.Builder album_builder = new Album.Builder();
+
+            album_builder.setAlbumId(data.getString("_albumId"))
+                    .setAlbum(data.getString("Album"))
+                    .setAlbumArtist(data.getString("AlbumArtist"))
+                    .setType(data.getString("Type"))
+                    .setYear(data.getString("Year"))
+                    .setColor(data.getString("Color"))
+                    .setThumbnail(data.getString("Thumbnail"))
+                    .setReleaseDate(data.getString("releaseDate"));
+
+            List<Track> trackList = new ArrayList<>();
+
+            for (int j = 0; j < each_tracks.length(); j++) {
+                JSONObject track = each_tracks.getJSONObject(j);
+                track.put("_albumId", data.getString("_albumId"));
+                track.put("Album", data.getString("Album"));
+                track.put("Color", data.getString("Color"));
+                track.put("Year", data.getString("Year"));
+                track.put("Thumbnail", data.getString("Thumbnail"));
+                track.put("releaseDate", data.getString("releaseDate"));
+                trackList.add(buildTrack(track));
+            }
+
+            album_builder.setTracks(trackList);
+
+            return album_builder.build();
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

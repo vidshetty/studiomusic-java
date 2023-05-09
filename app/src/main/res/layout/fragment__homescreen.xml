@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_Homescreen">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragHomescreen.Fragment_Homescreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +12,8 @@
         android:layout_height="match_parent"
         android:background="@color/black"
         android:id="@+id/homescreen_fragment_loader"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/fullscreenProgressBar"
@@ -27,17 +29,189 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/homescreen_content">
+        android:id="@+id/homescreen_content"
+        android:scrollbars="none">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:text="homescreen fragment" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
+            android:orientation="vertical"
+            android:background="@color/black">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="320dp"
+                android:id="@+id/mostPlayed_container">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/from_history"
+                    android:letterSpacing="-0.05"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="15sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="20dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:id="@+id/fromhistory_text"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/fromhistory_text"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/most_played"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="15dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:id="@+id/listenagain_text"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mostPlayed_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/listenagain_text"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:scrollbars="none"
+                    android:clipToPadding="false"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/quickpicks_container"
+                android:minHeight="380dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/start_radio_from_quick_picks"
+                    android:letterSpacing="-0.05"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="15sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="20dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:id="@+id/quickpicks_startradio"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/quickpicks_startradio"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/quick_picks"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="15dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:id="@+id/quickpicks_title"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    app:layout_constraintTop_toBottomOf="@id/quickpicks_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/quickpicks_recyclerview"
+                    android:clipToPadding="false"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:scrollbars="none"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="320dp"
+                android:id="@+id/newreleases_container">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/new_releases"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="15dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:id="@+id/newreleases_title"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newreleases_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/newreleases_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:scrollbars="none"
+                    android:clipToPadding="false"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="320dp"
+                android:id="@+id/recentlyadded_container">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/recently_added"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="15dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:id="@+id/recentlyadded_title"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recentlyadded_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/recentlyadded_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:scrollbars="none"
+                    android:clipToPadding="false"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

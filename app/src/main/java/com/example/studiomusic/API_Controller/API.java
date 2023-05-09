@@ -13,8 +13,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.studiomusic.MainActivity;
-import com.example.studiomusic.RequestSingleton;
+import com.example.studiomusic.Main.MainActivity;
+import com.example.studiomusic.Common.RequestSingleton;
 import com.example.studiomusic.SP_Controller.SPService;
 
 import org.json.JSONArray;

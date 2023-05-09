@@ -100,6 +100,11 @@ public class MusicService {
         return musicService.isPlaying();
     }
 
+    public boolean isPrepared() {
+        if (musicService == null) return false;
+        return musicService.isPrepared();
+    }
+
 //    @Override
 //    protected void onDestroy() {
 //        Log.d("servicelog","music service class destroy");

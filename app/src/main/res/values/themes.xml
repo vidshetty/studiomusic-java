@@ -41,9 +41,21 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="albumart_library">
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="albumview_albumart">
+        <item name="cornerSize">5dp</item>
+    </style>
+
     <style name="Theme.StudioMusic.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="navbar_text">
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="Theme.StudioMusic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
