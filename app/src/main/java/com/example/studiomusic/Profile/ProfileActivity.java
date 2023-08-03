@@ -2,7 +2,6 @@ package com.example.studiomusic.Profile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +31,6 @@ public class ProfileActivity extends AppCompatActivity {
     private MultipleRequests mulreq = null;
 
     private Loader loader = new Loader(this);
-    private Vibrator vibrator = null;
 
     private ImageView backButton = null;
     private Button signOut = null;
@@ -52,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
         mulreq = new MultipleRequests();
 
         fullScreenLoader = findViewById(R.id.profile_page_loader);
@@ -140,7 +137,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void revoke(View view) {
-        vibrator.vibrate(100);
+        Common.vibrate(this, 100);
         loader.startLoading();
         Common.signOut(this, loader);
     }

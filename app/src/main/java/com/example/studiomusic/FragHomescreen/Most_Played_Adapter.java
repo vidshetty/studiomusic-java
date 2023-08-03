@@ -1,18 +1,21 @@
 package com.example.studiomusic.FragHomescreen;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.studiomusic.Audio_Controller.MusicForegroundService.NowPlayingData;
+import com.example.studiomusic.Common.EqualizerView;
 import com.example.studiomusic.MusicData.Album;
+import com.example.studiomusic.MusicData.Track;
 import com.example.studiomusic.R;
 
 import java.util.List;
@@ -39,6 +42,7 @@ public class Most_Played_Adapter extends RecyclerView.Adapter<Most_Played_Adapte
 
     @Override
     public void onBindViewHolder(@NonNull MostPlayedHolder holder, int position) {
+        Track now_playing = NowPlayingData.getInstance(context).getTrack();
         Album album = most_played.get(position);
         Glide.with(context)
                 .asBitmap()
@@ -46,6 +50,37 @@ public class Most_Played_Adapter extends RecyclerView.Adapter<Most_Played_Adapte
                 .into(holder.imageView);
         holder.title.setText(album.getAlbum());
         holder.albumArtist.setText(album.getAlbumArtist());
+
+        if (now_playing == null || !now_playing.getAlbumId().equals(album.getAlbumId())) {
+            holder.playbutton.setVisibility(View.VISIBLE);
+            holder.equalizerView.setVisibility(View.GONE);
+            return;
+        }
+
+        holder.equalizerView.setVisibility(View.VISIBLE);
+        holder.playbutton.setVisibility(View.GONE);
+
+        if (NowPlayingData.getInstance(context).getMediaIsPlaying()) {
+            if (holder.equalizerView.isAnimating()) holder.equalizerView.stopBars();
+            holder.equalizerView.animateBars();
+        }
+        else {
+            holder.equalizerView.stopBars();
+        }
+
+//        if (
+//                now_playing == null ||
+//                !now_playing.getAlbumId().equals(album.getAlbumId()) ||
+//                !NowPlayingData.getInstance(context).getMediaIsPlaying()
+//        ) {
+//            holder.playbutton.setVisibility(View.VISIBLE);
+//            holder.pausebutton.setVisibility(View.GONE);
+//        }
+//        else {
+//            holder.playbutton.setVisibility(View.GONE);
+//            holder.pausebutton.setVisibility(View.VISIBLE);
+//        }
+
     };
 
     @Override
@@ -57,6 +92,8 @@ public class Most_Played_Adapter extends RecyclerView.Adapter<Most_Played_Adapte
         private TextView title = null;
         private TextView albumArtist = null;
         private ImageView playbutton = null;
+        private EqualizerView equalizerView = null;
+//        private ImageView pausebutton = null;
 
         public MostPlayedHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +110,17 @@ public class Most_Played_Adapter extends RecyclerView.Adapter<Most_Played_Adapte
             itemView.setOnLongClickListener(view -> {
                 return mostPlayedTouch.longClick(getAdapterPosition());
             });
+
+            equalizerView = itemView.findViewById(R.id.most_played_equalizerview);
+
+//            pausebutton = itemView.findViewById(R.id.albumart_pausebutton);
+//            pausebutton.setOnClickListener(view -> {
+//                mostPlayedTouch.click(getAdapterPosition());
+//            });
+//            pausebutton.setOnLongClickListener(view -> {
+//                return mostPlayedTouch.longClick(getAdapterPosition());
+//            });
+
         };
 
     };

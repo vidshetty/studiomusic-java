@@ -24,7 +24,17 @@
             android:textSize="15sp"
             android:textColor="@color/white"
             android:id="@+id/track_number"
-            android:fontFamily="@font/montserrat_regular"/>
+            android:fontFamily="@font/montserrat_regular"
+            android:visibility="gone"/>
+
+        <com.example.studiomusic.Common.EqualizerView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            app:foregroundColor="@color/white"
+            app:animDuration="4000"
+            android:id="@+id/albumview_equalizerview"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

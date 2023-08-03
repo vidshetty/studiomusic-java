@@ -1,5 +1,7 @@
 package com.example.studiomusic.MusicData;
 
+import com.example.studiomusic.Common.Common;
+
 import java.util.List;
 
 public class Album {
@@ -67,7 +69,7 @@ public class Album {
         }
 
         public Builder setAlbumArtist(String id) {
-            this.albumArtist = id;
+            this.albumArtist = Common.convertStringWithAnd(id);
             return this;
         }
 

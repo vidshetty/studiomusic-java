@@ -13,6 +13,7 @@ import com.example.studiomusic.Common.Loader;
 import com.example.studiomusic.ProfileCheck.ProfileCheckActivity;
 import com.example.studiomusic.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,13 +26,13 @@ public class APIService {
         loader.startLoading();
         Common.signOut(context, loader);
         Toast.makeText(context, "Your access has expired!", Toast.LENGTH_SHORT).show();
-    }
+    };
 
     private static void goToProfileCheck(Context context) {
         ((Activity) context).finishAffinity();
         context.startActivity(new Intent(context, ProfileCheckActivity.class));
         Toast.makeText(context, "Your access has expired!", Toast.LENGTH_SHORT).show();
-    }
+    };
 
     public static boolean isAuthOrTimeError(VolleyError err) {
 
@@ -57,7 +58,7 @@ public class APIService {
             return false;
         }
 
-    }
+    };
 
     public static void errorHandler(Context context, VolleyError err) {
 
@@ -94,7 +95,7 @@ public class APIService {
         if (type == 1) goToLogin(context);
         else if (type == 2) goToProfileCheck(context);
 
-    }
+    };
 
     public static void checkServer(
             Context context,
@@ -108,7 +109,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void accountCheck(
             Context context,
@@ -123,7 +124,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void accessCheck(
             Context context,
@@ -138,7 +139,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void continueLogIn(
             Context context,
@@ -153,7 +154,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void signOut(
             Context context,
@@ -168,7 +169,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void requestAccess(
             Context context,
@@ -183,7 +184,7 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
     public static void fetchLibrary(
             Context context,
@@ -203,7 +204,7 @@ public class APIService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    };
 
     public static void getAlbum(
             Context context,
@@ -224,7 +225,7 @@ public class APIService {
         catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    };
 
     public static void getHomeAlbums(
             Context context,
@@ -238,6 +239,82 @@ public class APIService {
                 resListener,
                 errorListener
         );
-    }
+    };
 
-}
+    public static void startRadio(
+            Context context,
+            JSONObject queryParams,
+            Response.Listener<JSONArray> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        try {
+            String queryString = "?exclude=" + queryParams.getString("trackId");
+            new API(context).JsonArrayRequest(
+                    Request.Method.GET,
+                    context.getString(R.string.prod_server) + "/api/startradio" + queryString,
+                    null,
+                    resListener,
+                    errorListener
+            );
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
+    };
+
+    public static void getMostPlayedRadio(
+            Context context,
+            JSONObject queryParams,
+            Response.Listener<JSONArray> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        try {
+            String queryString = "?exclude=" + queryParams.getString("albumId");
+            new API(context).JsonArrayRequest(
+                    Request.Method.GET,
+                    context.getString(R.string.prod_server) + "/api/mostPlayedRadio" + queryString,
+                    null,
+                    resListener,
+                    errorListener
+            );
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
+    };
+
+    public static void getLyrics(
+            Context context,
+            JSONObject queryParams,
+            Response.Listener<JSONArray> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        try {
+            String queryString = "?name=" + queryParams.getString("track_title");
+            new API(context).JsonArrayRequest(
+                    Request.Method.GET,
+                    context.getString(R.string.prod_server) + "/api/getLyrics" + queryString,
+                    null,
+                    resListener,
+                    errorListener
+            );
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
+    };
+
+    public static void addToRecentlyPlayed(
+            Context context,
+            JSONObject body
+    ) {
+        new API(context).JsonArrayRequest(
+                Request.Method.POST,
+                context.getString(R.string.prod_server) + "/api/addToRecentlyPlayed",
+                body.toString(),
+                null,
+                null
+        );
+    };
+
+};

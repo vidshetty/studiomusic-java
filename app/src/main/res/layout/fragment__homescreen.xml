@@ -1,10 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homescreen_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragHomescreen.Fragment_Homescreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/black"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/studiomusic_logo"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toEndOf="@id/logo"
+                android:background="@color/black"
+                android:fontFamily="@font/anton"
+                android:gravity="center_vertical"
+                android:text="@string/logoTitle"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="16dp"
+                android:background="@color/black"
+                app:shapeAppearanceOverlay="@style/profileImage" />
+
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="1px"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:background="@color/black_border"/>-->
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +71,9 @@
         android:background="@color/black"
         android:id="@+id/homescreen_fragment_loader"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:visibility="gone">
+        android:visibility="visible"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:elevation="10dp">
 
         <ProgressBar
             android:id="@+id/fullscreenProgressBar"
@@ -29,189 +89,210 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/homescreen_content"
-        android:scrollbars="none">
+        android:background="@color/black"
+        android:id="@+id/homescreen_fragment_nonloader"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="gone"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:elevation="10dp" />
 
-        <LinearLayout
+    <com.example.studiomusic.CustomSwipeRefreshLayout.CustomSwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="50dp"
-            android:orientation="vertical"
-            android:background="@color/black">
+            android:layout_height="match_parent"
+            android:id="@+id/homescreen_content"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:scrollbars="none">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="20dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="320dp"
-                android:id="@+id/mostPlayed_container">
+                android:paddingBottom="80dp"
+                android:orientation="vertical"
+                android:background="@color/black"
+                android:id="@+id/addpaddinghere">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/from_history"
-                    android:letterSpacing="-0.05"
-                    android:textColor="#B3FFFFFF"
-                    android:textSize="15sp"
-                    android:paddingLeft="18dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:paddingTop="20dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:id="@+id/fromhistory_text"/>
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/fromhistory_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/most_played"
-                    android:letterSpacing="-0.05"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="0dp"
-                    android:paddingBottom="15dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:id="@+id/listenagain_text"/>
+                    android:minHeight="320dp"
+                    android:id="@+id/mostPlayed_container">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mostPlayed_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/listenagain_text"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:scrollbars="none"
-                    android:clipToPadding="false"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/from_history"
+                        android:letterSpacing="-0.05"
+                        android:textColor="#B3FFFFFF"
+                        android:textSize="15sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="20dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:id="@+id/fromhistory_text"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/fromhistory_text"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/most_played"
+                        android:letterSpacing="-0.05"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="15dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:id="@+id/listenagain_text"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/quickpicks_container"
-                android:minHeight="380dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mostPlayed_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/listenagain_text"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:scrollbars="none"
+                        android:clipToPadding="false"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/start_radio_from_quick_picks"
-                    android:letterSpacing="-0.05"
-                    android:textColor="#B3FFFFFF"
-                    android:textSize="15sp"
-                    android:paddingLeft="18dp"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:paddingTop="20dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:id="@+id/quickpicks_startradio"/>
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/quickpicks_startradio"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/quick_picks"
-                    android:letterSpacing="-0.05"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="0dp"
-                    android:paddingBottom="15dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:id="@+id/quickpicks_title"/>
+                    android:id="@+id/quickpicks_container"
+                    android:minHeight="380dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    app:layout_constraintTop_toBottomOf="@id/quickpicks_title"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/start_radio_from_quick_picks"
+                        android:letterSpacing="-0.05"
+                        android:textColor="#B3FFFFFF"
+                        android:textSize="15sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="20dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:id="@+id/quickpicks_startradio"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/quickpicks_startradio"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/quick_picks"
+                        android:letterSpacing="-0.05"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="15dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:id="@+id/quickpicks_title"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        app:layout_constraintTop_toBottomOf="@id/quickpicks_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/quickpicks_recyclerview"
+                        android:clipToPadding="false"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
+                        android:scrollbars="none"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/quickpicks_recyclerview"
-                    android:clipToPadding="false"
-                    android:paddingLeft="13dp"
-                    android:paddingRight="13dp"
-                    android:scrollbars="none"/>
+                    android:minHeight="320dp"
+                    android:id="@+id/newreleases_container">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/new_releases"
+                        android:letterSpacing="-0.05"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="15dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:id="@+id/newreleases_title"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="320dp"
-                android:id="@+id/newreleases_container">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/newreleases_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/newreleases_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:scrollbars="none"
+                        android:clipToPadding="false"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"/>
 
-                <TextView
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:paddingTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/new_releases"
-                    android:letterSpacing="-0.05"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="0dp"
-                    android:paddingBottom="15dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:id="@+id/newreleases_title"/>
+                    android:minHeight="320dp"
+                    android:id="@+id/recentlyadded_container">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/newreleases_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/newreleases_title"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:scrollbars="none"
-                    android:clipToPadding="false"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/recently_added"
+                        android:letterSpacing="-0.05"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="15dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:id="@+id/recentlyadded_title"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recentlyadded_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/recentlyadded_title"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:scrollbars="none"
+                        android:clipToPadding="false"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="320dp"
-                android:id="@+id/recentlyadded_container">
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:text="@string/recently_added"
-                    android:letterSpacing="-0.05"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:paddingLeft="18dp"
-                    android:paddingTop="0dp"
-                    android:paddingBottom="15dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:id="@+id/recentlyadded_title"/>
+            </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recentlyadded_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/recentlyadded_title"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:scrollbars="none"
-                    android:clipToPadding="false"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"/>
+        </ScrollView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </com.example.studiomusic.CustomSwipeRefreshLayout.CustomSwipeRefreshLayout>
 
 </FrameLayout>

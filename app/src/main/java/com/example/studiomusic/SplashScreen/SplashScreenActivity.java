@@ -13,7 +13,6 @@ import androidx.core.splashscreen.SplashScreen;
 import com.android.volley.VolleyError;
 import com.example.studiomusic.API_Controller.API;
 import com.example.studiomusic.API_Controller.APIService;
-import com.example.studiomusic.Audio_Controller.MusicService;
 import com.example.studiomusic.Login.LoginActivity;
 import com.example.studiomusic.Main.MainActivity;
 import com.example.studiomusic.ProfileCheck.ProfileCheckActivity;
@@ -25,7 +24,6 @@ import org.json.JSONObject;
 public class SplashScreenActivity extends AppCompatActivity {
 
     private int count = 0;
-    private MusicService musicService = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,10 +40,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        musicService = MusicService.getInstance(getApplicationContext());
-        musicService.bindService();
-
-        callAPI();
+//        callAPI();
+        response(null);
 
     };
 
@@ -70,19 +66,15 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-//        musicService = MusicService.getInstance(getApplicationContext());
-//        musicService.bindService();
     };
 
     @Override
     protected void onStop() {
-//        if (musicService != null) musicService.unBindService();
         super.onStop();
     };
 
     @Override
     protected void onDestroy() {
-//        if (musicService != null) musicService.unBindService();
         super.onDestroy();
     };
 

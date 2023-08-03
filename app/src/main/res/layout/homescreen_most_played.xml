@@ -35,7 +35,32 @@
                 android:layout_height="40dp"
                 android:src="@drawable/ic_playbutton"
                 app:shapeAppearanceOverlay="@style/profileImage"
-                android:id="@+id/albumart_playbutton"/>
+                android:id="@+id/albumart_playbutton"
+                android:visibility="gone"/>
+
+            <com.example.studiomusic.Common.EqualizerView
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:foregroundColor="@color/white"
+                app:animDuration="4000"
+                android:id="@+id/most_played_equalizerview"
+                android:visibility="gone"/>
+
+<!--            <com.google.android.material.imageview.ShapeableImageView-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:src="@drawable/ic_pausebutton"-->
+<!--                app:shapeAppearanceOverlay="@style/profileImage"-->
+<!--                android:id="@+id/albumart_pausebutton"-->
+<!--                android:visibility="gone"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

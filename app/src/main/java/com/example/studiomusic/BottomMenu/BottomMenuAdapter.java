@@ -1,7 +1,6 @@
 package com.example.studiomusic.BottomMenu;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +18,30 @@ public class BottomMenuAdapter extends RecyclerView.Adapter<BottomMenuAdapter.Bo
 
     private Context context = null;
     private List<BottomMenu.MenuItem> list = null;
+    private BottomMenuTouch bottomMenuTouch = null;
 
-    public BottomMenuAdapter(Context context, List<BottomMenu.MenuItem> list) {
+    public BottomMenuAdapter(Context context, List<BottomMenu.MenuItem> list, BottomMenuTouch bottomMenuTouch) {
         this.context = context;
         this.list = list;
+        this.bottomMenuTouch = bottomMenuTouch;
     };
 
     @NonNull
     @Override
-    public BottomMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BottomMenuAdapter.BottomMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.bottomsheet_menu_list, parent, false);
-        BottomMenuViewHolder viewHolder = new BottomMenuViewHolder(view);
+        BottomMenuAdapter.BottomMenuViewHolder viewHolder = new BottomMenuAdapter.BottomMenuViewHolder(view);
         return viewHolder;
     };
 
     @Override
-    public void onBindViewHolder(@NonNull BottomMenuViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BottomMenuAdapter.BottomMenuViewHolder holder, int position) {
         BottomMenu.MenuItem item = list.get(position);
 //        holder.icon.setImageResource(item.getIconId());
         holder.name.setText(item.getMenuName());
-        if (item.getOnClickListener() != null) holder.whole_view.setOnClickListener(item.getOnClickListener());
+        holder.whole_view.setOnClickListener(view -> {
+            bottomMenuTouch.click(position);
+        });
     };
 
     @Override

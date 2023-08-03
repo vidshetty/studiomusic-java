@@ -33,6 +33,7 @@
     <string name="new_releases">New Releases</string>
     <string name="recently_added">Recently Added</string>
     <string name="searchbar_hint">Search songs, albums and artists...</string>
+    <string name="universal_message">We do not own any of the songs. This is just a project. Please do not sue us.</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

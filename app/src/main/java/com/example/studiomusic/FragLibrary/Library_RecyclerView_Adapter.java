@@ -41,6 +41,7 @@ public class Library_RecyclerView_Adapter extends RecyclerView.Adapter<Library_R
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         Log.d("servicelog", "position " + position);
         Album current = albumList.get(position);
+        holder.album_art.setMinimumHeight(holder.album_art.getWidth());
         Glide.with(context.getApplicationContext())
                 .asBitmap()
                 .load(current.getThumbnail())

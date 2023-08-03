@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,7 +46,6 @@ public class ProfileCheckActivity extends AppCompatActivity {
     private View wholeActivity = null;
     private Button responseButton = null;
     private Button signOutButton = null;
-    private Vibrator vibrator = null;
 
     String type = null, period = null,
             username = null, email = null, picture = null;
@@ -93,8 +91,6 @@ public class ProfileCheckActivity extends AppCompatActivity {
         }
         
         setContentView(R.layout.activity_profile_check);
-
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         responseButton = findViewById(R.id.profilecheck_continue);
 
@@ -148,11 +144,11 @@ public class ProfileCheckActivity extends AppCompatActivity {
         responseButton.setOnClickListener(view -> {
             switch (type) {
                 case "login":
-                    vibrator.vibrate(100);
+                    Common.vibrate(this, 100);
                     callAPI();
                     break;
                 case "signup":
-                    vibrator.vibrate(100);
+                    Common.vibrate(this, 100);
                     String text = usernameEdit.getText().toString();
                     usernameEdit.clearFocus();
                     if (text.equals("")) {
@@ -160,9 +156,11 @@ public class ProfileCheckActivity extends AppCompatActivity {
                         return;
                     }
                     callAPI();
+                    break;
                 case "expired":
-                    vibrator.vibrate(100);
+                    Common.vibrate(this, 100);
                     requestAccess();
+                    break;
             }
         });
 
@@ -173,7 +171,7 @@ public class ProfileCheckActivity extends AppCompatActivity {
     }
 
     private void revoke(View view) {
-        vibrator.vibrate(100);
+        Common.vibrate(this, 100);
         loader.startLoading();
         Common.signOut(this, loader);
     }

@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/library_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragLibrary.Fragment_Library">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/black"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/studiomusic_logo"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="3dp"
+                android:layout_toEndOf="@id/logo"
+                android:background="@color/black"
+                android:fontFamily="@font/anton"
+                android:gravity="center_vertical"
+                android:text="@string/logoTitle"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="16dp"
+                android:background="@color/black"
+                app:shapeAppearanceOverlay="@style/profileImage" />
+
+            <!--            <View-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="1px"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:background="@color/black_border"/>-->
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize">
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -34,12 +93,28 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/library_content"
             android:background="@color/black"
-            android:visibility="visible">
+            android:id="@+id/library_fragment_nonloader"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:visibility="gone"
+            android:elevation="10dp"/>
+
+        <com.example.studiomusic.CustomSwipeRefreshLayout.CustomSwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxWidth="500dp"
+            android:id="@+id/swiperefreshlayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/library_content"
+                android:background="@color/black"
+                android:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
@@ -49,12 +124,14 @@
                     android:id="@+id/library_recyclerview"
                     android:clipToPadding="false"
                     android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
+                    android:paddingBottom="80dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp">
                 </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.example.studiomusic.CustomSwipeRefreshLayout.CustomSwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

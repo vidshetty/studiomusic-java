@@ -1,6 +1,7 @@
-package com.example.studiomusic.AlbumView;
+package com.example.studiomusic.FragAlbumView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studiomusic.Common.EqualizerView;
+import com.example.studiomusic.FragAlbumView.AlbumTracksTouch;
+import com.example.studiomusic.Audio_Controller.MusicForegroundService.NowPlayingData;
 import com.example.studiomusic.MusicData.Track;
 import com.example.studiomusic.R;
 
@@ -39,10 +43,29 @@ public class Album_Track_Adapter extends RecyclerView.Adapter<Album_Track_Adapte
     public void onBindViewHolder(@NonNull TrackHolder holder, int position) {
         Track current = albumList.get(position);
         int trackNo = position + 1;
-        holder.track_number.setText("" + trackNo);
+//        holder.track_number.setText("" + trackNo);
         holder.track_title.setText(current.getTitle());
         holder.track_artist.setText(current.getArtist());
         holder.track_duration.setText(current.getDuration());
+
+        Track now_playing = NowPlayingData.getInstance(context).getTrack();
+
+        if (now_playing == null || !now_playing.getTrackId().equals(current.getTrackId())) {
+            holder.track_number.setVisibility(View.VISIBLE);
+            holder.equalizerView.setVisibility(View.GONE);
+            holder.track_number.setText("" + trackNo);
+            return;
+        }
+
+        holder.track_number.setVisibility(View.GONE);
+        holder.equalizerView.setVisibility(View.VISIBLE);
+
+        if (NowPlayingData.getInstance(context).getMediaIsPlaying()) {
+            holder.equalizerView.animateBars();
+        } else {
+            holder.equalizerView.stopBars();
+        }
+
     };
 
     @Override
@@ -57,16 +80,21 @@ public class Album_Track_Adapter extends RecyclerView.Adapter<Album_Track_Adapte
         private TextView track_artist = null;
         private TextView track_duration = null;
         private RelativeLayout track_menu = null;
+        private EqualizerView equalizerView = null;
 
         public TrackHolder(@NonNull View itemView) {
             super(itemView);
             track_number = itemView.findViewById(R.id.track_number);
+            equalizerView = itemView.findViewById(R.id.albumview_equalizerview);
             track_title = itemView.findViewById(R.id.track_title);
             track_artist = itemView.findViewById(R.id.track_artist);
             track_duration = itemView.findViewById(R.id.track_duration);
             track_menu = itemView.findViewById(R.id.track_menu);
+            itemView.setOnClickListener(view -> {
+                albumTracksTouch.trackClick(getAdapterPosition());
+            });
             track_menu.setOnClickListener(view -> {
-                albumTracksTouch.menuClick(getAdapterPosition());
+                albumTracksTouch.trackMenuClick(getAdapterPosition());
             });
         };
 

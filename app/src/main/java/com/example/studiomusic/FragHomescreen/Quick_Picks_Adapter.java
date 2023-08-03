@@ -69,6 +69,9 @@ public class Quick_Picks_Adapter extends RecyclerView.Adapter<Quick_Picks_Adapte
             menu.setOnClickListener(view -> {
                 quickPicksTouch.menuClick(getAdapterPosition());
             });
+            itemView.setOnClickListener(view -> {
+                quickPicksTouch.click(getAdapterPosition());
+            });
         };
 
     };

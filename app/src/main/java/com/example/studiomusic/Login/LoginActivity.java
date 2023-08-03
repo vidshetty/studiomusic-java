@@ -4,16 +4,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.android.volley.VolleyError;
 import com.example.studiomusic.API_Controller.API;
 import com.example.studiomusic.API_Controller.APIService;
+import com.example.studiomusic.Common.Common;
 import com.example.studiomusic.Common.Loader;
 import com.example.studiomusic.ProfileCheck.ProfileCheckActivity;
 import com.example.studiomusic.R;
@@ -31,13 +40,17 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String tag = "login_tag";
+
     private Loader loader = null;
     private GoogleSignInClient signInClient = null;
     private GoogleSignInAccount account = null;
     private final int RC_SIGN_IN = 1000;
-    private Vibrator vibrator = null;
+    private ActivityResultLauncher<Intent> launcher = null;
 
     private void accountCheckResponse(JSONObject response) {
+
+        Log.d(tag, response.toString());
 
         SharedPreferences token = SPService.TOKEN(this);
         SharedPreferences.Editor editor = token.edit();
@@ -64,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             API.setHeaders(this);
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d(tag, e.getMessage());
             Toast.makeText(this, "User shared preferences error!", Toast.LENGTH_LONG).show();
             loader.stopLoading();
             return;
@@ -74,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, ProfileCheckActivity.class));
         finish();
 
-    }
+    };
 
     private void accountCheckError(VolleyError err) {
         Toast.makeText(this, "account check error!", Toast.LENGTH_LONG).show();
@@ -100,13 +114,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onActivityResult(int reqCode, int resultCode, Intent intent) {
+    public void onResult(ActivityResult result) {
 
-        super.onActivityResult(reqCode,resultCode,intent);
-        if (reqCode != RC_SIGN_IN) return;
+//        if (result.getResultCode() != RC_SIGN_IN) return;
+        if (result.getData() == null) return;
 
-        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
         loader.startLoading();
 
         try {
@@ -120,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
         accountCheck();
 
-    }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +141,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    onResult(result);
+                }
+            }
+        );
+
         loader = new Loader(this);
-        vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -142,16 +164,17 @@ public class LoginActivity extends AppCompatActivity {
 
         Button linkedIn = findViewById(R.id.linkedin);
         linkedIn.setOnClickListener(view -> {
-            vibrator.vibrate(100);
+            Common.vibrate(getApplicationContext(), 100);
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.linkedin_uri))));
         });
 
-    }
+    };
 
     private void buttonClick(View view) {
-        vibrator.vibrate(100);
+        Common.vibrate(getApplicationContext(), 100);
         Intent signInIntent = signInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+        launcher.launch(signInIntent);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+    };
 
 }

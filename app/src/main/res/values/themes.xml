@@ -61,4 +61,5 @@
     <style name="Theme.StudioMusic.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.StudioMusic.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

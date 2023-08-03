@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/albumview_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:id="@+id/albumview_parent"
-    tools:context=".AlbumView.AlbumViewActivity">
+    tools:context=".FragAlbumView.Fragment_AlbumView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
             app:contentInsetStart="0dp"
             android:elevation="10dp"
             android:id="@+id/albumview_loader_toolbar">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -38,7 +39,8 @@
                     android:layout_marginLeft="16dp"/>
 
             </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
+
+    </androidx.appcompat.widget.Toolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,6 +57,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:contentInsetStart="0dp"
             android:elevation="10dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -69,6 +72,7 @@
                     android:layout_marginLeft="16dp"/>
 
             </RelativeLayout>
+
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.core.widget.NestedScrollView
@@ -82,7 +86,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="80dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -200,45 +205,69 @@
                         android:layout_marginTop="20dp"
                         android:id="@+id/albumview_playbuttonholder">
 
-                        <com.google.android.material.imageview.ShapeableImageView
-                            app:layout_constraintLeft_toLeftOf="parent"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:src="@drawable/ic_playbutton"
-                            app:shapeAppearanceOverlay="@style/profileImage"
-                            android:id="@+id/album_playbutton"/>
+                            android:id="@+id/buttom_holder">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                android:src="@drawable/ic_playbutton"
+                                app:shapeAppearanceOverlay="@style/profileImage"
+                                android:id="@+id/album_playbutton" />
+
+<!--                            <com.google.android.material.imageview.ShapeableImageView-->
+<!--                                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintRight_toRightOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                android:layout_width="55dp"-->
+<!--                                android:layout_height="55dp"-->
+<!--                                android:src="@drawable/ic_pausebutton"-->
+<!--                                app:shapeAppearanceOverlay="@style/profileImage"-->
+<!--                                android:id="@+id/album_pausebutton"-->
+<!--                                android:visibility="gone"/>-->
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ImageView
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintLeft_toRightOf="@id/album_playbutton"
+                            app:layout_constraintLeft_toRightOf="@id/buttom_holder"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
+                            android:id="@+id/albumview_menu"
                             android:layout_marginLeft="15dp"
                             android:src="@drawable/ic_menu_button"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="60dp"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:id="@+id/albumview_playbuttonholder">-->
+                    <!--                    <RelativeLayout-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="60dp"-->
+                    <!--                        app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+                    <!--                        android:layout_marginTop="20dp"-->
+                    <!--                        android:id="@+id/albumview_playbuttonholder">-->
 
-<!--                        <com.google.android.material.imageview.ShapeableImageView-->
-<!--                            android:layout_width="55dp"-->
-<!--                            android:layout_height="55dp"-->
-<!--                            android:src="@drawable/ic_playbutton"-->
-<!--                            app:shapeAppearanceOverlay="@style/profileImage"-->
-<!--                            android:layout_marginLeft="20dp"-->
-<!--                            android:layout_centerInParent="true"/>-->
+                    <!--                        <com.google.android.material.imageview.ShapeableImageView-->
+                    <!--                            android:layout_width="55dp"-->
+                    <!--                            android:layout_height="55dp"-->
+                    <!--                            android:src="@drawable/ic_playbutton"-->
+                    <!--                            app:shapeAppearanceOverlay="@style/profileImage"-->
+                    <!--                            android:layout_marginLeft="20dp"-->
+                    <!--                            android:layout_centerInParent="true"/>-->
 
-<!--                    </RelativeLayout>-->
+                    <!--                    </RelativeLayout>-->
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
@@ -254,7 +283,8 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/albumview_tracklist"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        android:layout_marginTop="30dp">
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/numberOfTracks_wrapper">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -299,6 +329,18 @@
 
                     </RelativeLayout>
 
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@id/numberOfTracks_wrapper"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/universal_message"
+                        android:textColor="#404040"
+                        android:textSize="8sp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="20dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -307,4 +349,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
