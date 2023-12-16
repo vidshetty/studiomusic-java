@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NowPlaying.NowPlaying"
+    tools:context="com.app.studiomusic.NowPlaying.NowPlaying"
     android:id="@+id/nowplaying_parent">
 
     <androidx.appcompat.widget.Toolbar
@@ -128,7 +128,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.example.studiomusic.NowPlaying.NowPlayingConstraintLayout
+    <com.app.studiomusic.NowPlaying.NowPlayingConstraintLayout
         app:layout_constraintTop_toBottomOf="@+id/nowplaying_toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
@@ -155,7 +155,7 @@
 
         </androidx.cardview.widget.CardView>
 
-    </com.example.studiomusic.NowPlaying.NowPlayingConstraintLayout>
+    </com.app.studiomusic.NowPlaying.NowPlayingConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -414,7 +414,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/nowplaying_navigation"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="50dp"
         android:background="@drawable/nowplaying_navbar">
 
         <TextView

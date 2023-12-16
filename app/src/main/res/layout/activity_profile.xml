@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".Profile.ProfileActivity">
+    android:theme="@style/Theme.Material3.Dark"
+    tools:context="com.app.studiomusic.Profile.ProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profileToolbar"
@@ -54,8 +55,8 @@
         <ProgressBar
             android:id="@+id/fullscreenProgressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

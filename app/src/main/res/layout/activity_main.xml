@@ -5,26 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:theme="@style/Theme.Material3.Dark"
     android:id="@+id/main_activity_parent"
-    tools:context=".Main.MainActivity">
+    tools:context="com.app.studiomusic.Main.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_bar"
+        app:layout_constraintBottom_toTopOf="@+id/main_navigation"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="55dp"/>
+        android:layout_marginBottom="65dp"/>
+
+    <View
+        app:layout_constraintBottom_toTopOf="@id/mini_player"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/snackbar_view"
+        android:visibility="invisible"
+        android:background="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
     <LinearLayout
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav_bar"
+        app:layout_constraintBottom_toTopOf="@id/main_navigation"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="61dp"
         android:background="@color/light_black"
         android:visibility="gone"
         android:clickable="true"
@@ -87,10 +98,9 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/miniplayer_button"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginLeft="10dp">
 
                 <ProgressBar
                     android:layout_width="30dp"
@@ -100,21 +110,52 @@
                     android:layout_centerInParent="true"
                     android:id="@+id/mini_player_loader"/>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/mini_player_play_pause_ripple_container"
+                    android:background="@drawable/round_background_60dp"
+                    android:clipToOutline="true"
+                    android:layout_centerVertical="true"
                     android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_pausebutton_white"
-                    android:id="@+id/mini_player_pausebutton"/>
+                    android:layout_centerInParent="true">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_playbutton_white"
-                    android:id="@+id/mini_player_playbutton"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/mini_player_play_pause_container"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_pausebutton_white"
+                            android:visibility="gone"
+                            android:id="@+id/mini_player_pausebutton" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_playbutton_white"
+                            android:id="@+id/mini_player_playbutton" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </RelativeLayout>
 
@@ -123,25 +164,275 @@
         <ProgressBar
             android:id="@+id/mini_player_progressbar"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:progressTint="@color/white"
             style="?android:attr/progressBarStyleHorizontal"/>
 
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/navigation_bar"
+        android:id="@+id/main_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
         android:background="@color/light_black"
-        app:itemIconTint="@color/icon_black"
-        app:labelVisibilityMode="unlabeled"
-        app:itemIconSize="22dp"
-        app:itemTextAppearanceActive="@style/navbar_text"
-        app:itemTextAppearanceInactive="@style/navbar_text"
-        app:itemTextColor="@color/icon_black"/>
+        android:theme="@style/Theme.Material3.Dark">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_navigation_inner">
+
+            <RelativeLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/main_navigation_search_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/main_navigation_home_relativelayout"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/main_navigation_home"
+                    android:layout_centerInParent="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/dummy_view_home"
+                        android:layout_width="65dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/main_navigation_home_image_container"
+                        android:background="@drawable/navigation_round_drawable"
+                        android:clickable="true"
+                        android:clipToOutline="true">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:id="@+id/main_navigation_home_image_ripple"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground">
+
+                            <ImageView
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_home_active"
+                                android:id="@+id/main_navigation_home_image"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        app:layout_constraintTop_toBottomOf="@id/main_navigation_home_image_container"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/main_navigation_home_text"
+                        android:id="@+id/dummy_view_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"/>
+
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@+id/dummy_view_home"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Home"
+                        android:textSize="12sp"
+                        android:id="@+id/main_navigation_home_text" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/main_navigation_home_relativelayout"
+                app:layout_constraintRight_toLeftOf="@id/main_navigation_library_relativelayout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/main_navigation_search_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/main_navigation_search"
+                    android:layout_centerInParent="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/dummy_view_search"
+                        android:layout_width="65dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/main_navigation_search_image_container"
+                        android:background="@drawable/navigation_round_drawable"
+                        android:clickable="true"
+                        android:clipToOutline="true">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:id="@+id/main_navigation_search_image_ripple"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground">
+
+                            <ImageView
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/main_navigation_search_image"
+                                android:src="@drawable/ic_search_active"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        app:layout_constraintTop_toBottomOf="@id/main_navigation_search_image_container"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/main_navigation_search_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:id="@+id/dummy_view_search"/>
+
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@+id/dummy_view_search"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Search"
+                        android:textSize="12sp"
+                        android:id="@+id/main_navigation_search_text" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/main_navigation_search_relativelayout"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/main_navigation_library_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/main_navigation_library"
+                    android:layout_centerInParent="true">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/dummy_view_library"
+                        android:layout_width="65dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/main_navigation_library_image_container"
+                        android:background="@drawable/navigation_round_drawable"
+                        android:clickable="true"
+                        android:clipToOutline="true">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:id="@+id/main_navigation_library_image_ripple"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?android:selectableItemBackground">
+
+                            <ImageView
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/main_navigation_library_image"
+                                android:src="@drawable/ic_library_active"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        app:layout_constraintTop_toBottomOf="@id/main_navigation_library_image_container"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/main_navigation_library_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:id="@+id/dummy_view_library"/>
+
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@+id/dummy_view_library"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Library"
+                        android:textSize="12sp"
+                        android:id="@+id/main_navigation_library_text" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_nav_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:menu="@menu/navigation_bar"-->
+<!--        android:background="@color/light_black"-->
+<!--        app:itemIconTint="@color/icon_black"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:itemIconSize="22dp"-->
+<!--        app:itemTextAppearanceActive="@style/navbar_text"-->
+<!--        app:itemTextAppearanceInactive="@style/navbar_text"-->
+<!--        app:itemTextColor="@color/icon_black"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

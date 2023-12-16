@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="160dp"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:id="@+id/albumart_wrapper"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="138dp"
-            android:layout_height="138dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:id="@+id/mostplayed_albumart"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="150dp"
-            android:layout_height="138dp"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/albumart_playbutton_container">
 
             <com.google.android.material.imageview.ShapeableImageView
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -38,16 +41,30 @@
                 android:id="@+id/albumart_playbutton"
                 android:visibility="gone"/>
 
-            <com.example.studiomusic.Common.EqualizerView
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+<!--            <com.app.studiomusic.Common.EqualizerView-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                app:foregroundColor="@color/white"-->
+<!--                app:animDuration="4000"-->
+<!--                app:customDimension="30dp"-->
+<!--                android:id="@+id/most_played_equalizerview"-->
+<!--                android:visibility="gone"/>-->
+
+            <com.app.studiomusic.Common.EqualizerView
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 app:foregroundColor="@color/white"
                 app:animDuration="4000"
+                app:customDimension="25dp"
                 android:id="@+id/most_played_equalizerview"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:visibility="gone"/>
 
 <!--            <com.google.android.material.imageview.ShapeableImageView-->
@@ -69,8 +86,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="2dp"
         android:textColor="#E6FFFFFF"
@@ -86,8 +103,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:textColor="#B3FFFFFF"

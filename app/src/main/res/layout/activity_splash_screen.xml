@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen.SplashScreenActivity">
+    android:theme="@style/Theme.Material3.Dark"
+    tools:context="com.app.studiomusic.SplashScreen.SplashScreenActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

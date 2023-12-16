@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.studiomusic">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <supports-screens android:largeScreens="false" android:smallScreens="true"
+        android:xlargeScreens="false" android:normalScreens="true"/>
+
     <application
-        android:name=".Audio_Controller.MusicApplication"
+        android:name="com.app.studiomusic.Audio_Controller.MusicApplication"
         android:allowBackup="true"
         android:icon="@mipmap/studiomusic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/studiomusic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/no_action_bar"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".Lyrics.LyricsActivity"
-            android:exported="false" />
+            android:name="com.app.studiomusic.NowPlayingNew.NowPlayingNew"
+            android:exported="false"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
-            android:name=".Queue.QueueActivity"
+            android:name="com.app.studiomusic.Lyrics.LyricsActivity"
             android:exported="false"
             android:resizeableActivity="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NowPlaying.NowPlaying"
+            android:name="com.app.studiomusic.Queue.QueueActivity"
+            android:exported="false"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.app.studiomusic.NowPlaying.NowPlaying"
             android:exported="false"
             android:resizeableActivity="false"
             android:screenOrientation="portrait" /> <!-- <activity -->
@@ -56,62 +68,59 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
         <service
-            android:name=".Audio_Controller.MusicForegroundService"
+            android:name="com.app.studiomusic.Audio_Controller.MusicForegroundService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".ProfileCheck.ProfileCheckActivity"
+            android:name="com.app.studiomusic.ProfileCheck.ProfileCheckActivity"
             android:exported="false"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar" />
         <activity
-            android:name=".Login.LoginActivity"
+            android:name="com.app.studiomusic.Login.LoginActivity"
             android:exported="false"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar_login" />
         <activity
-            android:name=".Profile.ProfileActivity"
+            android:name="com.app.studiomusic.Profile.ProfileActivity"
             android:exported="false"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar" />
         <activity
-            android:name=".SplashScreen.SplashScreenActivity"
+            android:name="com.app.studiomusic.SplashScreen.SplashScreenActivity"
             android:exported="true"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/SplashScreenTheme">
-
-            <!-- <intent-filter android:autoVerify="true"> -->
-            <!-- <action android:name="android.intent.action.VIEW" /> -->
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
-            <!-- <data -->
-            <!-- android:host="studiomusic.app" -->
-            <!-- android:scheme="https" -->
-            <!-- android:path=""/> -->
-            <!-- <data -->
-            <!-- android:host="studiomusic.app" -->
-            <!-- android:scheme="http" -->
-            <!-- android:path=""/> -->
-            <!-- </intent-filter> -->
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main.MainActivity"
-            android:exported="false"
+            android:name="com.app.studiomusic.Main.MainActivity"
+            android:exported="true"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/no_action_bar"
-            android:windowSoftInputMode="adjustPan" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="studiomusic.app" />
+                <data android:pathPrefix="/"/>
+                <data android:scheme="http" />
+                <data android:host="studiomusic.app" />
+                <data android:pathPrefix="/" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -27,7 +27,7 @@
             android:fontFamily="@font/montserrat_regular"
             android:visibility="gone"/>
 
-        <com.example.studiomusic.Common.EqualizerView
+        <com.app.studiomusic.Common.EqualizerView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerInParent="true"
@@ -57,52 +57,97 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:paddingRight="5dp"
-            android:id="@+id/track_title"/>
+            android:id="@+id/track_title"
+            android:layout_marginBottom="2dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:maxWidth="190dp"
-                android:layout_height="match_parent"
-                android:textColor="#B3FFFFFF"
-                android:textSize="13sp"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/montserrat_regular"
-                android:letterSpacing="-0.01"
-                android:id="@+id/track_artist"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:visibility="gone"
+                android:id="@+id/track_lyrics_tag">
 
-                <RelativeLayout
-                    android:layout_width="15dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/track_dot_separator">
+                    android:background="@drawable/lyrics_tag_drawable"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp"
+                    android:layout_marginRight="5dp">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="4dp"
-                        android:layout_height="4dp"
-                        app:shapeAppearanceOverlay="@style/profileImage"
-                        android:background="#B3FFFFFF"
-                        android:layout_centerInParent="true"/>
+                    <TextView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="LYRICS"
+                        android:textSize="7sp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="13sp"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:letterSpacing="-0.01"
+                    android:id="@+id/track_artist"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <RelativeLayout
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/track_dot_separator">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="4dp"
+                            android:layout_height="4dp"
+                            app:shapeAppearanceOverlay="@style/profileImage"
+                            android:background="#B3FFFFFF"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:textColor="#B3FFFFFF"
                     android:textSize="13sp"
                     android:layout_height="match_parent"
-                    android:id="@+id/track_duration"/>
+                    android:id="@+id/track_duration"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"/>
 
             </LinearLayout>
 

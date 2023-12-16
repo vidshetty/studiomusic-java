@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="EqualizerView">
+        <attr name="customDimension" format="dimension"/>
         <attr name="foregroundColor" format="color" />
         <attr name="animDuration" format="integer" />
+        <attr name="betweenMargin" format="dimension" />
     </declare-styleable>
 </resources>

@@ -34,7 +34,7 @@
     <string name="recently_added">Recently Added</string>
     <string name="searchbar_hint">Search songs, albums and artists...</string>
     <string name="universal_message">We do not own any of the songs. This is just a project. Please do not sue us.</string>
-
+    <string name="google_web_client_id">899587310580-2hn144rmn5e2mmjurigifgi573dclbgl.apps.googleusercontent.com</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

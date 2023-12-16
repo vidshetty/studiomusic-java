@@ -322,7 +322,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/album/baseline_album_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/volume_up/baseline_volume_up_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -332,8 +332,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="404040" />
-                            <entry key="outputName" value="ic_album_placeholder" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="volume_up" />
                             <entry key="sourceFile" value="$PROJECT_DIR$/../studiomusic-java-assets/repeat_all_icon.svg" />
                           </map>
                         </option>

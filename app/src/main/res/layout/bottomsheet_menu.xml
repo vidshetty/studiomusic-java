@@ -21,14 +21,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="100dp"
+        android:id="@+id/track_details_container">
 
         <ImageView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:id="@+id/track_or_album_art"/>
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:letterSpacing="-0.01"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -62,9 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#B3FFFFFF"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/montserrat_semibold"
+                android:fontFamily="@font/montserrat_regular"
                 android:letterSpacing="-0.01"
                 android:id="@+id/track_artist"
                 android:maxLines="1"
@@ -78,7 +79,8 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_alignParentBottom="true"
-        android:background="@color/black_border"/>
+        android:background="@color/black_border"
+        android:id="@+id/bottom_menu_black_border"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

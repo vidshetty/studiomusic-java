@@ -5,7 +5,8 @@
     android:id="@+id/profilecheck_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileCheck.ProfileCheckActivity"
+    tools:context="com.app.studiomusic.ProfileCheck.ProfileCheckActivity"
+    android:theme="@style/Theme.Material3.Dark"
     android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout

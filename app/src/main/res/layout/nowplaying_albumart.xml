@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nowplaying_thumbnail_holder">
+
+        <androidx.cardview.widget.CardView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:id="@+id/nowplaying_thumbnail_cardview"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/transparent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:background="@color/white"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/nowplaying_thumbnail"
+                app:shapeAppearanceOverlay="@style/nowplaying_albumart"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintDimensionRatio="1:1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/nowplaying_dummy_middle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/nowplaying_rewind"
+                        android:background="@drawable/nowplaying_rewind_drawable">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/nowplaying_rewind"
+                        app:layout_constraintRight_toLeftOf="@id/nowplaying_forward"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/nowplaying_dummy_middle"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/nowplaying_dummy_middle"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/nowplaying_forward"
+                        android:background="@drawable/nowplaying_forward_drawable">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
+<!--<com.example.studiomusic.NowPlaying.NowPlayingConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:id="@+id/nowplaying_thumbnail_holder"-->
+<!--    android:background="@color/white">-->
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintDimensionRatio="1:1"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        android:id="@+id/nowplaying_thumbnail_cardview"-->
+<!--        android:background="@color/black">-->
+
+<!--        <com.google.android.material.imageview.ShapeableImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/nowplaying_thumbnail" />-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+<!--</com.example.studiomusic.NowPlaying.NowPlayingConstraintLayout>-->
+
+<!--    android:layout_marginTop="50dp"-->
+<!--    android:layout_marginBottom="40dp"-->

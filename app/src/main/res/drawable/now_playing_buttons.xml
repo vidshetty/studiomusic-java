@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="50dp"/>
+    <solid android:color="@color/light_black"/>
+</shape>
+<!--<ripple xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:color="@color/light_black"-->
+<!--    android:radius="50dp">-->
+<!--    <item android:id="@+id/mask"-->
+<!--        android:gravity="center">-->
+<!--        <shape android:shape="rectangle" android:innerRadius="50dp">-->
+<!--            <corners android:radius="50dp"/>-->
+<!--            <solid android:color="@color/light_black"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</ripple>-->

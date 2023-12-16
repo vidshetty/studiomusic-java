@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -25,6 +24,7 @@
         <entry key="app/src/main/res/drawable/ic_latest_blackblue.xml" value="0.20923076923076922" />
         <entry key="app/src/main/res/drawable/ic_latest_blueblack.xml" value="0.10729166666666666" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2325" />
+        <entry key="app/src/main/res/drawable/ic_menu_button.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/ic_miniplayer_down_icon.xml" value="0.16" />
         <entry key="app/src/main/res/drawable/ic_next_icon.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/ic_nextbutton_notification.xml" value="0.156" />
@@ -64,6 +64,7 @@
         <entry key="app/src/main/res/drawable/navbar_home_selector.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/navbar_library_selector.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/navbar_search.xml" value="0.1635" />
+        <entry key="app/src/main/res/drawable/now_playing_buttons.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/nowplaying_nav_ripple.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/nowplaying_navbar.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/nowplaying_toolbar_data.xml" value="0.1405" />
@@ -72,6 +73,7 @@
         <entry key="app/src/main/res/drawable/profilecheck_periodtext_red.xml" value="0.2325" />
         <entry key="app/src/main/res/drawable/profilecheck_profileview.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/round_image.xml" value="0.20923076923076922" />
+        <entry key="app/src/main/res/drawable/search_more_button.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/seekbar_thumb.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/seekbar_thumb_no_ripple.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/seekbar_thumb_transparent.xml" value="0.156" />
@@ -88,6 +90,7 @@
         <entry key="app/src/main/res/layout/activity_lyrics.xml" value="0.2259963768115942" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_now_playing.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/activity_now_playing_new.xml" value="0.2418478260869565" />
         <entry key="app/src/main/res/layout/activity_now_playing_with_lyrics.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.34814814814814815" />
         <entry key="app/src/main/res/layout/activity_profile_check.xml" value="0.21920289855072464" />
@@ -101,6 +104,7 @@
         <entry key="app/src/main/res/layout/equalizer_view.xml" value="0.2418478260869565" />
         <entry key="app/src/main/res/layout/fragment__album_view.xml" value="0.24320652173913043" />
         <entry key="app/src/main/res/layout/fragment__homescreen.xml" value="0.21920289855072464" />
+        <entry key="app/src/main/res/layout/fragment__homescreen_test.xml" value="0.20606884057971014" />
         <entry key="app/src/main/res/layout/fragment__library.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment__search.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.254981884057971" />
@@ -113,13 +117,16 @@
         <entry key="app/src/main/res/layout/loader.xml" value="0.21920289855072464" />
         <entry key="app/src/main/res/layout/lyrics.xml" value="0.2418478260869565" />
         <entry key="app/src/main/res/layout/most.xml" value="0.24320652173913043" />
+        <entry key="app/src/main/res/layout/nowplaying_albumart.xml" value="0.22418478260869565" />
         <entry key="app/src/main/res/layout/queue_activity_list.xml" value="0.2259963768115942" />
+        <entry key="app/src/main/res/layout/search_albums.xml" value="0.20606884057971014" />
+        <entry key="app/src/main/res/layout/search_songs.xml" value="0.335" />
         <entry key="app/src/main/res/layout/splash_screen.xml" value="0.19635416666666666" />
         <entry key="app/src/main/res/menu/navigation_bar.xml" value="0.30885416666666665" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -10,32 +10,32 @@
         android:pathData="M18.5,49.13L18.5,85"
         android:strokeWidth="7"
         android:fillColor="#00000000"
-        android:strokeColor="#ffffff"/>
+        android:strokeColor="#cccccc"/>
     <path
         android:pathData="M81.5,48.25L81.5,84.13"
         android:strokeWidth="7"
         android:fillColor="#00000000"
-        android:strokeColor="#ffffff"/>
+        android:strokeColor="#cccccc"/>
     <path
         android:pathData="M15,81.5L85,81.5"
         android:strokeWidth="7"
         android:fillColor="#00000000"
-        android:strokeColor="#ffffff"/>
+        android:strokeColor="#cccccc"/>
     <path
         android:pathData="M16.9,51.9L51.03,17.78"
         android:strokeWidth="7"
         android:fillColor="#00000000"
-        android:strokeColor="#ffffff"/>
+        android:strokeColor="#cccccc"/>
     <path
         android:pathData="M46.5,17.63L83.25,50.88"
         android:strokeWidth="7"
         android:fillColor="#00000000"
-        android:strokeColor="#ffffff"/>
+        android:strokeColor="#cccccc"/>
     <path
         android:pathData="M20.25,50h59.5v28.88h-59.5z"
-        android:fillColor="#ffffff"/>
+        android:fillColor="#cccccc"/>
     <path
         android:pathData="M49.75,21.13l29.04,28.26l-27.56,28.32l-29.04,-28.26z"
-        android:fillColor="#ffffff"/>
+        android:fillColor="#cccccc"/>
   </group>
 </vector>

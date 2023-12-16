@@ -49,6 +49,18 @@
         <item name="cornerSize">5dp</item>
     </style>
 
+    <style name="nowplaying_albumart">
+        <item name="cornerSize">10dp</item>
+    </style>
+
+<!--    <style name="dummy_sheet" parent="Theme.Design.Light.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/bottomSheetBackground</item>-->
+<!--    </style>-->
+
+<!--    <style name="bottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">-->
+<!--        <item name="android:background">@drawable/dummy_sheet</item>-->
+<!--    </style>-->
+
     <style name="Theme.StudioMusic.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

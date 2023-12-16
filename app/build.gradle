@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.studiomusic"
-        minSdk 28
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.app.studiomusic"
+        minSdk 31
+        targetSdk 33
+        versionCode 4
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,6 +32,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.app.studiomusic'
 }
 
 dependencies {

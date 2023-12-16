@@ -3,6 +3,7 @@
     <gradient
         android:startColor="@color/login"
         android:endColor="@color/black"
-        android:angle="@integer/material_motion_duration_medium_1"
+        android:angle="-90"
         android:type="linear" />
 </shape>
+<!--    android:angle="@integer/material_motion_duration_medium_1"-->
