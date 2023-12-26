@@ -362,4 +362,19 @@ public class APIService {
         }
     };
 
+    public static void checkForUpdates(
+            Context context,
+            String queryString,
+            Response.Listener<JSONObject> resListener,
+            Response.ErrorListener errorListener
+    ) {
+        new API(context).JsonObjectRequest(
+                Request.Method.GET,
+                context.getString(R.string.prod_server) + "/api/checkForUpdates" + queryString,
+                null,
+                resListener,
+                err -> commonResponseError(err, context, errorListener)
+        );
+    };
+
 };

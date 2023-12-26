@@ -37,6 +37,7 @@ import android.transition.Slide;
 import android.transition.Transition;
 import android.widget.TextView;
 
+import com.app.studiomusic.AppUpdates.UpdateChecker;
 import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.Audio_Controller.MusicForegroundService;
 import com.app.studiomusic.Audio_Controller.MusicService;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String tag = "lifecycle";
     private static final int NAVIGATION_NON_SELECTED_COLOR = R.color.transparent;
-    private static final int NAVIGATION_SELECTED_COLOR = R.color.primary_dark_50;
+    private static final int NAVIGATION_SELECTED_COLOR = R.color.primary;
     private static String CURRENT_SCREEN = null;
 
     private Intent root_intent = null;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout searchRelativeLayout = null;
     private PlayerBroadcastReceiver receiver = null;
     private PlaybackStopReceiver playbackStopReceiver = null;
+    private UpdateReceiver updateReceiver = null;
     private MusicForegroundService music_service = null;
     private ServiceConnection serviceConnection = null;
     private Handler progressHandler = null;
@@ -123,10 +125,19 @@ public class MainActivity extends AppCompatActivity {
         };
     };
 
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(MainActivity.this);
+        };
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        UpdateChecker.initiateCompleteFlow(MainActivity.this);
 
         BackStack.clear();
 
@@ -921,6 +932,20 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
+        super.onPause();
+    };
+
+    @Override
+    protected void onPostResume() {
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
+        super.onPostResume();
+    };
+
+    @Override
     protected void onDestroy() {
         cleanUp();
         super.onDestroy();
@@ -933,6 +958,7 @@ public class MainActivity extends AppCompatActivity {
             progressHandlerRunnable = null;
         }
         MusicService.unBind(this, serviceConnection);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(playbackStopReceiver);
     };

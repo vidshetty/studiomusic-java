@@ -49,7 +49,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences user = SPService.USER(this);
         SharedPreferences tokens = SPService.TOKEN(this);
         return user.getString("_id",null) != null && user.getString("name",null) != null &&
-                user.getString("email",null) != null && user.getString("picture",null) != null &&
+                user.getString("email",null) != null &&
+//                user.getString("picture",null) != null &&
                 tokens.getString("accessToken",null) != null &&
                 tokens.getString("refreshToken",null) != null;
     };

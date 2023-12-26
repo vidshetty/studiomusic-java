@@ -22,8 +22,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.app.studiomusic.AppUpdates.UpdateChecker;
 import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.Audio_Controller.MusicForegroundService;
+import com.app.studiomusic.Audio_Controller.MusicForegroundService.NowPlayingData;
 import com.app.studiomusic.Audio_Controller.MusicService;
 import com.app.studiomusic.BottomMenu.BottomMenu;
 import com.app.studiomusic.Common.Common;
@@ -32,7 +34,9 @@ import com.app.studiomusic.MusicData.Track;
 import com.app.studiomusic.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class QueueActivity extends AppCompatActivity {
@@ -52,6 +56,7 @@ public class QueueActivity extends AppCompatActivity {
     private ImageView queue_pausebutton = null;
     private RecyclerView queue_recyclerview = null;
     private Queue_RecyclerView_Adapter queue_adapter = null;
+    private List<QueueItem> queueItems = null;
     private RecyclerView.SmoothScroller smoothScroller_firstTime = null;
     private RecyclerView.SmoothScroller smoothScroller = null;
     private LinearLayoutManager linearLayoutManager = null;
@@ -66,6 +71,7 @@ public class QueueActivity extends AppCompatActivity {
     private ServiceConnection serviceConnection = null;
     private QueueBroadcastReceiver receiver = null;
     private QueuePlayPauseBroadcastReceiver playPauseReceiver = null;
+    private UpdateReceiver updateReceiver = null;
     private MusicForegroundService music_service = null;
     private ItemTouchHelper itemTouchHelper = null;
 
@@ -80,6 +86,13 @@ public class QueueActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             handleQueuePlayPause();
+        };
+    };
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(QueueActivity.this);
         };
     };
 
@@ -108,6 +121,10 @@ public class QueueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_queue);
         overridePendingTransition(R.anim.nowplaying_open, R.anim.previous_stay);
 
+        IntentFilter intentFilter = new IntentFilter();
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
+
         initialise();
         createView();
 
@@ -115,7 +132,7 @@ public class QueueActivity extends AppCompatActivity {
 
     private void initialise() {
 
-        MusicForegroundService.NowPlayingData.getInstance(this);
+        NowPlayingData.getInstance(this);
 
         IntentFilter intentFilter = new IntentFilter(MusicApplication.TRACK_CHANGE);
         if (receiver == null) receiver = new QueueBroadcastReceiver();
@@ -142,7 +159,7 @@ public class QueueActivity extends AppCompatActivity {
 
         queue_progressbar_max_set = false;
         initialPlayPauseButtonSet = false;
-        previous_now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
+        previous_now_playing_index = NowPlayingData.getInstance(this).getIndex();
 
         if (queue_progressbar == null) queue_progressbar = findViewById(R.id.queue_progressbar);
         if (queue_playbutton == null) queue_playbutton = findViewById(R.id.queue_playbutton);
@@ -174,7 +191,8 @@ public class QueueActivity extends AppCompatActivity {
                     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                         int from = viewHolder.getAdapterPosition();
                         int to = target.getAdapterPosition();
-                        MusicForegroundService.NowPlayingData.getInstance(getApplicationContext()).swapInQueue(from, to);
+                        NowPlayingData.getInstance(getApplicationContext()).swapInQueue(from, to);
+                        Collections.swap(queueItems, from, to);
                         queue_adapter.notifyItemMoved(from, to);
                         return true;
                     };
@@ -217,7 +235,18 @@ public class QueueActivity extends AppCompatActivity {
         if (queue_recyclerview == null) queue_recyclerview = findViewById(R.id.queue_recyclerview);
         linearLayoutManager = new LinearLayoutManager(this);
         queue_recyclerview.setLayoutManager(linearLayoutManager);
-        queue_adapter = new Queue_RecyclerView_Adapter(this, queueTouch);
+        List<QueueTrack> tracks = NowPlayingData.getInstance(this).getQueueTrackList();
+        queueItems = new ArrayList<>();
+        tracks.forEach(queueTrack -> {
+            Track track = queueTrack.getTrack();
+            if (track == null) return;
+            queueItems.add(new QueueItem(track));
+        });
+        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
+        boolean is_playing = NowPlayingData.getInstance(this).getMediaIsPlaying();
+        queueItems.get(now_playing_index).setNowPlaying(true);
+        queueItems.get(now_playing_index).setPaused(!is_playing);
+        queue_adapter = new Queue_RecyclerView_Adapter(this, queueTouch, queueItems);
         queue_recyclerview.setAdapter(queue_adapter);
         scrollToRecyclerViewFirstTime();
         itemTouchHelper.attachToRecyclerView(queue_recyclerview);
@@ -297,16 +326,30 @@ public class QueueActivity extends AppCompatActivity {
     };
 
     private void change_track() {
+//        if (queue_adapter == null) return;
+//        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
+//        queue_adapter.notifyItemChanged(previous_now_playing_index);
+//        queue_adapter.notifyItemChanged(now_playing_index);
+//        previous_now_playing_index = now_playing_index;
         if (queue_adapter == null) return;
-        int now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
-        queue_adapter.notifyItemChanged(previous_now_playing_index);
+        int previous_index = -1;
+        for (int i=0; i<queueItems.size(); i++) {
+            if (queueItems.get(i).getIsNowPlaying()) {
+                previous_index = i;
+                break;
+            }
+        }
+        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
+        if (previous_index == -1 || now_playing_index == -1) return;
+        queueItems.get(previous_index).setNowPlaying(false);
+        queue_adapter.notifyItemChanged(previous_index);
+        queueItems.get(now_playing_index).setNowPlaying(true);
         queue_adapter.notifyItemChanged(now_playing_index);
-        previous_now_playing_index = now_playing_index;
     };
 
     private void removeQueueTrack(int position) {
 
-        List<QueueTrack> queue = MusicForegroundService.NowPlayingData.getInstance(this).getQueueTrackList();
+        List<QueueTrack> queue = NowPlayingData.getInstance(this).getQueueTrackList();
         if (queue == null) return;
 
         Track track = queue.get(position).getTrack();
@@ -320,32 +363,38 @@ public class QueueActivity extends AppCompatActivity {
 
         if (queue.size() == 1) {
             if (music_service != null) music_service.stopPlayback();
-            MusicForegroundService.NowPlayingData.getInstance(this).removeQueueTrack(position);
+            NowPlayingData.getInstance(this).removeQueueTrack(position);
             closeQueue(2, null);
             return;
         }
 
-        int now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
+        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
 
         if (position == now_playing_index) {
+            if (queue_adapter == null) return;
+            if (queueItems == null) return;
+            int new_index = (now_playing_index + 1) % queueItems.size();
+            boolean is_playing = NowPlayingData.getInstance(this).getMediaIsPlaying();
+            queueItems.get(new_index).setNowPlaying(true);
+            queueItems.get(new_index).setPaused(!is_playing);
+            queue_adapter.notifyItemChanged(now_playing_index);
+            queueItems.remove(now_playing_index);
+            queue_adapter.notifyItemRemoved(position);
             if (music_service != null) music_service.playNextTrack();
-            MusicForegroundService.NowPlayingData.getInstance(this).removeQueueTrack(position);
-            previous_now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
-            if (queue_adapter != null) {
-                queue_adapter.notifyItemRemoved(position);
-            }
+            NowPlayingData.getInstance(this).removeQueueTrack(position);
             return;
         }
 
-        MusicForegroundService.NowPlayingData.getInstance(this).removeQueueTrack(position);
+        NowPlayingData.getInstance(this).removeQueueTrack(position);
         if (queue_adapter != null) {
+            queueItems.remove(position);
             queue_adapter.notifyItemRemoved(position);
         }
 
     };
 
     private void scrollToRecyclerViewFirstTime() {
-        linearLayoutManager.scrollToPosition(Math.max(MusicForegroundService.NowPlayingData.getInstance(this).getIndex() - 2, 0));
+        linearLayoutManager.scrollToPosition(Math.max(NowPlayingData.getInstance(this).getIndex() - 2, 0));
 //        if (smoothScroller_firstTime == null || linearLayoutManager == null) return;
 //        smoothScroller_firstTime.setTargetPosition(Math.max(NowPlayingData.getInstance(this).getIndex() - 2, 0));
 //        linearLayoutManager.startSmoothScroll(smoothScroller_firstTime);
@@ -364,7 +413,7 @@ public class QueueActivity extends AppCompatActivity {
 //        linearLayoutManager.scrollToPositionWithOffset(target_position, Common.convertDpToPixel(this, 60) * 2);
 
         if (smoothScroller == null || linearLayoutManager == null) return;
-        smoothScroller.setTargetPosition(Math.max(MusicForegroundService.NowPlayingData.getInstance(this).getIndex() - 2, 0));
+        smoothScroller.setTargetPosition(Math.max(NowPlayingData.getInstance(this).getIndex() - 2, 0));
         linearLayoutManager.startSmoothScroll(smoothScroller);
 
     };
@@ -374,6 +423,7 @@ public class QueueActivity extends AppCompatActivity {
         if (queue_playbutton == null) return;
         if (queue_pausebutton == null) return;
         if (queue_adapter == null) return;
+        if (queueItems == null) return;
         queue_progressbar.setMax(0);
         queue_progressbar.setProgress(0);
         queue_progressbar_max_set = false;
@@ -384,9 +434,11 @@ public class QueueActivity extends AppCompatActivity {
     };
 
     private void handleQueuePlayPause() {
-        List<QueueTrack> queue = MusicForegroundService.NowPlayingData.getInstance(this).getQueueTrackList();
-        if (queue == null || queue_adapter == null) return;
-        int now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
+        List<QueueTrack> queue = NowPlayingData.getInstance(this).getQueueTrackList();
+        if (queue == null || queue_adapter == null || queueItems == null) return;
+        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
+        boolean is_playing = NowPlayingData.getInstance(this).getMediaIsPlaying();
+        queueItems.get(now_playing_index).setPaused(!is_playing);
         queue_adapter.notifyItemChanged(now_playing_index);
     };
 
@@ -398,7 +450,7 @@ public class QueueActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                MusicForegroundService.NowPlayingData currentTrack = MusicForegroundService.NowPlayingData.getInstance(getApplicationContext());
+                NowPlayingData currentTrack = NowPlayingData.getInstance(getApplicationContext());
 
                 // initial play/pause button set
                 if (!initialPlayPauseButtonSet && currentTrack.getMediaPrepared()) {
@@ -463,6 +515,7 @@ public class QueueActivity extends AppCompatActivity {
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(playPauseReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
     };
 
     @Override
@@ -473,7 +526,7 @@ public class QueueActivity extends AppCompatActivity {
 
     private void setTrack(int position) {
         if (music_service == null) return;
-        int now_playing_index = MusicForegroundService.NowPlayingData.getInstance(this).getIndex();
+        int now_playing_index = NowPlayingData.getInstance(this).getIndex();
         if (now_playing_index == position) return;
         new Handler().postDelayed(() -> {
             music_service.playSpecificTrackInQueue(position);
@@ -485,7 +538,7 @@ public class QueueActivity extends AppCompatActivity {
 
     private void openTrackMenu(int position) {
 
-        Track track = MusicForegroundService.NowPlayingData.getInstance(this)
+        Track track = NowPlayingData.getInstance(this)
                 .getQueueTrackList().get(position).getTrack();
 
         View.OnClickListener share = view -> {

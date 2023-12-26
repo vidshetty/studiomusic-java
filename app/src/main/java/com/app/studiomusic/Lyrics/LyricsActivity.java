@@ -2,6 +2,7 @@ package com.app.studiomusic.Lyrics;
 
 import com.android.volley.VolleyError;
 import com.app.studiomusic.API_Controller.APIService;
+import com.app.studiomusic.AppUpdates.UpdateChecker;
 import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.Audio_Controller.MusicForegroundService;
 import com.app.studiomusic.Audio_Controller.MusicService;
@@ -91,12 +92,20 @@ public class LyricsActivity extends AppCompatActivity {
     private MusicForegroundService.NowPlayingData nowPlayingData_instance = null;
     private ServiceConnection serviceConnection = null;
     private LyricsBroadcastReceiver receiver = null;
+    private UpdateReceiver updateReceiver = null;
     private MusicForegroundService music_service = null;
 
     private class LyricsBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             handleLyricsPlayer();
+        };
+    };
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(LyricsActivity.this);
         };
     };
 
@@ -107,6 +116,10 @@ public class LyricsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_lyrics);
         overridePendingTransition(R.anim.nowplaying_open, R.anim.previous_stay);
+
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
 
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
@@ -610,6 +623,7 @@ public class LyricsActivity extends AppCompatActivity {
             syncRunnable = null;
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     };
 

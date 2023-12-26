@@ -1,6 +1,9 @@
 package com.app.studiomusic.Login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,10 +17,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.app.studiomusic.API_Controller.API;
 import com.app.studiomusic.API_Controller.APIService;
+import com.app.studiomusic.AppUpdates.UpdateChecker;
+import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.Common.Common;
 import com.app.studiomusic.Common.Loader;
 import com.app.studiomusic.ProfileCheck.ProfileCheckActivity;
@@ -46,14 +52,26 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient signInClient = null;
     private GoogleSignInAccount account = null;
     private Loader loader = null;
+    private UpdateReceiver updateReceiver = null;
     private ActivityResultLauncher<Intent> launcher = null;
 //    private ActivityResultLauncher<IntentSenderRequest> one_tap_launcher = null;
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(LoginActivity.this);
+        };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
 
         loader = new Loader(this);
 
@@ -135,11 +153,11 @@ public class LoginActivity extends AppCompatActivity {
         loader.stopLoading();
 
         SharedPreferences token = SPService.TOKEN(this);
-        SharedPreferences.Editor editor = token.edit();
+        SharedPreferences.Editor token_editor = token.edit();
         try {
-            editor.putString("accessToken", response.getString("accessToken"));
-            editor.putString("refreshToken", response.getString("refreshToken"));
-            editor.apply();
+            token_editor.putString("accessToken", response.getString("accessToken"));
+            token_editor.putString("refreshToken", response.getString("refreshToken"));
+            token_editor.apply();
             API.setHeaders(this);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -148,21 +166,23 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         SharedPreferences user = SPService.USER(this);
-        editor = user.edit();
+        SharedPreferences.Editor user_editor = user.edit();
         try {
-            editor.putString("_id", response.getString("_id"));
-            editor.putString("name", response.getString("name"));
-            editor.putString("email", response.getString("email"));
+            user_editor.putString("_id", response.getString("_id"));
+            user_editor.putString("name", response.getString("name"));
+            user_editor.putString("email", response.getString("email"));
             String picture = response.isNull("picture") ? null : response.getString("picture");
-            editor.putString("picture", picture);
-            editor.apply();
+            user_editor.putString("picture", picture);
+            user_editor.apply();
             API.setHeaders(this);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d(tag, e.getMessage());
+            Log.d(tag, e.getMessage() + " ");
             Toast.makeText(this, "User shared preferences error!", Toast.LENGTH_LONG).show();
             return;
         }
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
 
         startActivity(new Intent(this, ProfileCheckActivity.class));
         finish();

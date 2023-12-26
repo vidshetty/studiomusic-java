@@ -14,6 +14,7 @@ public class MusicApplication extends Application {
     public static final String QUEUE_TRACK_SWAP = "queue_track_swap";
     public static final String TRACK_REMOVE = "track_remove";
     public static final String RADIO_RESPONSE = "radio_response";
+    public static final String UPDATE_DOWNLOAD = "update_download";
 
     public static enum MORE_SEARCH_TYPES {
         TRACKS, ALBUMS

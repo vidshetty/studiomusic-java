@@ -37,4 +37,5 @@
     <string name="google_web_client_id">899587310580-2hn144rmn5e2mmjurigifgi573dclbgl.apps.googleusercontent.com</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="update_string">You have a new update available!</string>
 </resources>

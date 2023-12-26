@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.app.studiomusic"
         minSdk 31
-        targetSdk 33
-        versionCode 4
-        versionName "1.0.0"
+        targetSdk 34
+        versionCode 7
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

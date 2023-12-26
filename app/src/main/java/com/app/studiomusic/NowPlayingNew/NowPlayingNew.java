@@ -35,6 +35,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.app.studiomusic.AppUpdates.UpdateChecker;
 import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.Audio_Controller.MusicForegroundService;
 import com.app.studiomusic.Audio_Controller.MusicService;
@@ -120,6 +121,7 @@ public class NowPlayingNew extends AppCompatActivity {
     private QueueTrackSwapReceiver queueTrackSwapReceiver = null;
     private TrackRemoveReceiver trackRemoveReceiver = null;
     private RadioResponseReceiver radioResponseReceiver = null;
+    private UpdateReceiver updateReceiver = null;
     private ServiceConnection serviceConnection = null;
     private ActivityResultLauncher<Intent> launcher = null;
 
@@ -162,6 +164,13 @@ public class NowPlayingNew extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             onRadioResponse();
+        };
+    };
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(NowPlayingNew.this);
         };
     };
 
@@ -1165,6 +1174,7 @@ public class NowPlayingNew extends AppCompatActivity {
 //    };
 
     private void closeNowPlaying(Intent intent) {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
         setResult(1, intent);
         finish();
         overridePendingTransition(R.anim.previous_stay, R.anim.nowplaying_close);
@@ -1200,6 +1210,20 @@ public class NowPlayingNew extends AppCompatActivity {
 
         bottomMenu_new.show();
 
+    };
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
+        super.onPause();
+    };
+
+    @Override
+    protected void onPostResume() {
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
+        super.onPostResume();
     };
 
 };

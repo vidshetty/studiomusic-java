@@ -17,31 +17,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.studiomusic.Audio_Controller.MusicForegroundService;
 import com.app.studiomusic.Common.EqualizerView;
 import com.app.studiomusic.MusicData.QueueTrack;
+import com.app.studiomusic.MusicData.Track;
 import com.bumptech.glide.Glide;
 import com.app.studiomusic.R;
+
+import java.util.List;
 
 public class Queue_RecyclerView_Adapter extends RecyclerView.Adapter<Queue_RecyclerView_Adapter.QueueViewHolder> {
 
     private Context context = null;
     private QueueTouch queueTouch = null;
+    private List<QueueItem> queueItems = null;
 
-    public Queue_RecyclerView_Adapter(Context context, QueueTouch queueTouch) {
+    public Queue_RecyclerView_Adapter(Context context, QueueTouch queueTouch, List<QueueItem> queueItems) {
         this.queueTouch = queueTouch;
         this.context = context;
+        this.queueItems = queueItems;
     };
 
     @NonNull
     @Override
     public QueueViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.queue_activity_list, parent, false);
-        QueueViewHolder viewHolder = new QueueViewHolder(view);
-        return viewHolder;
+        return new QueueViewHolder(view);
     };
 
     @Override
     public void onBindViewHolder(@NonNull QueueViewHolder holder, int position) {
 
-        QueueTrack track = MusicForegroundService.NowPlayingData.getInstance(context).getQueueTrackList().get(position);
+//        QueueTrack track = MusicForegroundService.NowPlayingData.getInstance(context).getQueueTrackList().get(position);
+        QueueItem item = queueItems.get(position);
+        Track track = item.getTrack();
 
         holder.title.setText(track.getTitle());
         holder.artist.setText(track.getArtist());
@@ -50,12 +56,12 @@ public class Queue_RecyclerView_Adapter extends RecyclerView.Adapter<Queue_Recyc
         if (track.hasLyrics()) holder.lyrics_tag.setVisibility(View.VISIBLE);
         else holder.lyrics_tag.setVisibility(View.GONE);
 
-        if (track.isNowPlaying()) {
+        if (item.getIsNowPlaying()) {
             holder.mainView.setBackgroundColor(Color.parseColor("#202020"));
             Glide.with(context)
-                    .asBitmap()
-                    .load(track.getThumbnail())
-                    .into(holder.album_art_1);
+                .asBitmap()
+                .load(track.getThumbnail())
+                .into(holder.album_art_1);
             holder.album_art_1.setVisibility(View.VISIBLE);
             holder.equalizerView.setVisibility(View.VISIBLE);
             holder.equalizer_holder.setVisibility(View.VISIBLE);
@@ -71,7 +77,7 @@ public class Queue_RecyclerView_Adapter extends RecyclerView.Adapter<Queue_Recyc
             holder.equalizer_holder.setVisibility(View.GONE);
         }
 
-        if (MusicForegroundService.NowPlayingData.getInstance(context).getMediaIsPlaying()) {
+        if (!item.getIsPaused()) {
             holder.equalizerView.animateBars();
         } else {
             holder.equalizerView.stopBars();
@@ -81,7 +87,8 @@ public class Queue_RecyclerView_Adapter extends RecyclerView.Adapter<Queue_Recyc
 
     @Override
     public int getItemCount() {
-        return MusicForegroundService.NowPlayingData.getInstance(context).getQueueTrackList().size();
+//        return MusicForegroundService.NowPlayingData.getInstance(context).getQueueTrackList().size();
+        return queueItems.size();
     };
 
     public class QueueViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,9 @@
 package com.app.studiomusic.Profile;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +14,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.app.studiomusic.API_Controller.APIService;
+import com.app.studiomusic.AppUpdates.UpdateChecker;
+import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.SP_Controller.SPService;
 import com.bumptech.glide.Glide;
 import com.app.studiomusic.Common.Common;
@@ -41,9 +48,17 @@ public class ProfileActivity extends AppCompatActivity {
     private ConstraintLayout fullScreenContent = null;
     private ConstraintLayout periodTextContainer = null;
     private TextView periodText = null;
+    private UpdateReceiver updateReceiver = null;
 
     private String type = null, period = null;
     private String username = null, email = null, picture = null;
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(ProfileActivity.this);
+        };
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +66,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         mulreq = new MultipleRequests();
+
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
 
         fullScreenLoader = findViewById(R.id.profile_page_loader);
         fullScreenContent = findViewById(R.id.profile_page_content);
@@ -63,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         profileAPI();
 
-    }
+    };
 
     private void profileAPIResponse(JSONObject response) {
 
@@ -138,4 +157,9 @@ public class ProfileActivity extends AppCompatActivity {
         Common.signOut(this, loader);
     }
 
-}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
+    };
+};

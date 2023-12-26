@@ -1,7 +1,9 @@
 package com.app.studiomusic.ProfileCheck;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -16,9 +18,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.app.studiomusic.API_Controller.APIService;
+import com.app.studiomusic.AppUpdates.UpdateChecker;
+import com.app.studiomusic.Audio_Controller.MusicApplication;
 import com.app.studiomusic.SP_Controller.SPService;
 import com.bumptech.glide.Glide;
 import com.app.studiomusic.Common.Common;
@@ -43,16 +48,30 @@ public class ProfileCheckActivity extends AppCompatActivity {
     private View wholeActivity = null;
     private Button responseButton = null;
     private Button signOutButton = null;
+    private UpdateReceiver updateReceiver = null;
 
-    String type = null, period = null,
-            username = null, email = null, picture = null;
+    String type = null, period = null, username = null, email = null, picture = null;
     Boolean seen = null;
+
+    private class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UpdateChecker.install(ProfileCheckActivity.this);
+        };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_screen_loader);
+
+        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        if (updateReceiver == null) updateReceiver = new UpdateReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
+
         accessCheck();
+
     }
 
     private void accessCheck() {
@@ -191,6 +210,7 @@ public class ProfileCheckActivity extends AppCompatActivity {
 
     private void continueLogInResponse(JSONObject res) {
         loader.stopLoading();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver);
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

@@ -28,6 +28,10 @@ public class API {
     private static RequestQueue queue = null;
     private static Map<String,String> headers = new HashMap<>();
 
+    public RequestQueue getQueue() {
+        return API.queue;
+    };
+
     public API(Context context) {
         queue = RequestSingleton.getInstance(context).getRequestQueue();
         if (headers.containsKey("authorization")) return;

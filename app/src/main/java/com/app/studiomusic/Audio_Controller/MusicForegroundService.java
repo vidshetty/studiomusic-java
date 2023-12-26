@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ServiceInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
@@ -786,7 +787,11 @@ public class MusicForegroundService extends Service {
         actionIntentFilter.addAction(ACTIONS.FORWARD);
         actionIntentFilter.addAction(ACTIONS.REWIND);
 
-        getApplicationContext().registerReceiver(actionReceiver, actionIntentFilter);
+        if (Build.VERSION.SDK_INT >= 33) {
+            getApplicationContext().registerReceiver(actionReceiver, actionIntentFilter, RECEIVER_EXPORTED);
+        } else {
+            getApplicationContext().registerReceiver(actionReceiver, actionIntentFilter);
+        }
 
         mediaSession.setActive(true);
 
@@ -997,7 +1002,7 @@ public class MusicForegroundService extends Service {
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         metadataBuilder.putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, resource);
                         mediaSession.setMetadata(metadataBuilder.build());
-                        startForeground(1, notificationBuilder.build());
+                        startForeground(1, notificationBuilder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
                         startMusic();
                     };
                     @Override
