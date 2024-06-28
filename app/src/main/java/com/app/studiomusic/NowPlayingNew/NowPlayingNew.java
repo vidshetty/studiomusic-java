@@ -1220,7 +1220,8 @@ public class NowPlayingNew extends AppCompatActivity {
 
     @Override
     protected void onPostResume() {
-        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MusicApplication.UPDATE_DOWNLOAD);
         if (updateReceiver == null) updateReceiver = new UpdateReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
         super.onPostResume();

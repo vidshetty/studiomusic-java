@@ -67,7 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         mulreq = new MultipleRequests();
 
-        IntentFilter intentFilter = new IntentFilter(MusicApplication.UPDATE_DOWNLOAD);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MusicApplication.UPDATE_DOWNLOAD);
         if (updateReceiver == null) updateReceiver = new UpdateReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, intentFilter);
 

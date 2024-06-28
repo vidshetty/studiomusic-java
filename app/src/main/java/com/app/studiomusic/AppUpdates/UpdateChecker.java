@@ -139,7 +139,7 @@ public class UpdateChecker {
             context,
             (response)-> {
 
-                boolean updatesAvailable = response.optBoolean("updateAvailable", true);
+                boolean updatesAvailable = response.optBoolean("updateAvailable", false);
 //                boolean updatesAvailable = true;
 
                 Log.d("update_checker", "updates available " + updatesAvailable);
