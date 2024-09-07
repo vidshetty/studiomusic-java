@@ -56,6 +56,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:paddingRight="5dp"
+            android:fontFamily="@font/montserrat_regular"
             android:id="@+id/search_songs_track_title"/>
 
         <LinearLayout
@@ -88,6 +89,7 @@
                         android:text="LYRICS"
                         android:textSize="7sp"
                         android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -138,6 +140,7 @@
                         android:textColor="#B3FFFFFF"
                         android:textSize="13sp"
                         android:layout_height="match_parent"
+                        android:fontFamily="@font/montserrat_regular"
                         android:id="@+id/search_songs_track_duration"/>
 
                 </LinearLayout>

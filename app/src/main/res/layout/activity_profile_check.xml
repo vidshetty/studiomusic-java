@@ -60,6 +60,7 @@
             android:textColor="@color/light_white"
             android:textFontWeight="300"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat_regular"
             android:maxLines="1"
             android:paddingRight="20dp"
             android:paddingTop="5dp"/>
@@ -88,6 +89,7 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:textFontWeight="500"
+            android:fontFamily="@font/montserrat_regular"
             android:ellipsize="end"
             android:maxLines="2"/>
 
@@ -107,6 +109,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:hint="Enter username"
+        android:fontFamily="@font/montserrat_regular"
         android:textColor="@color/white"
         android:textColorHint="@color/light_white"
         android:textCursorDrawable="@drawable/username_edittext_cursor"
@@ -125,6 +128,7 @@
         android:text="@string/profilecheck_continue"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:fontFamily="@font/montserrat_semibold"
         android:background="@drawable/continue_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/profilecheck_signout"
@@ -141,6 +145,7 @@
         android:text="@string/sign_out"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:fontFamily="@font/montserrat_semibold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginLeft="16dp"

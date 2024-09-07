@@ -56,6 +56,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:paddingRight="5dp"
+            android:fontFamily="@font/montserrat_regular"
             android:id="@+id/search_albums_title"/>
 
         <LinearLayout
@@ -101,6 +102,7 @@
                     android:textColor="#B3FFFFFF"
                     android:textSize="13sp"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat_regular"
                     android:id="@+id/search_albums_type"/>
 
             </LinearLayout>

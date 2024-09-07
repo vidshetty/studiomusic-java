@@ -893,15 +893,15 @@ public class MusicForegroundService extends Service {
 
     public void rewind() {
         if (mp == null) return;
-        if (mp.getCurrentPosition() <= 10000) mp.seekTo(0);
-        else mp.seekTo(mp.getCurrentPosition() - 10000);
+        if (mp.getCurrentPosition() <= 10000) seekTo(0);
+        else seekTo(mp.getCurrentPosition() - 10000);
         play_manual();
     };
 
     public void forward() {
         if (mp == null) return;
         if (mp.getCurrentPosition() < mp.getDuration() - 10000)
-            mp.seekTo(mp.getCurrentPosition() + 10000);
+            seekTo(mp.getCurrentPosition() + 10000);
         play_manual();
     };
 
@@ -914,9 +914,19 @@ public class MusicForegroundService extends Service {
 //                        && !mp.isPlaying()
         ) {
             mp.start();
+            updateMediaSession(PlaybackStateCompat.STATE_BUFFERING);
+            updateNotification(false);
+            mp.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+                @Override
+                public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+                    updateMediaSession(PlaybackStateCompat.STATE_PLAYING);
+                    updateNotification(true);
+                    mp.setOnBufferingUpdateListener(null);
+                }
+            });
             nowplayingdata_instance.setMediaIsPlaying(true);
-            updateMediaSession(PlaybackStateCompat.STATE_PLAYING);
-            updateNotification(true);
+//            updateMediaSession(PlaybackStateCompat.STATE_PLAYING);
+//            updateNotification(true);
             if (!timer.isDone() && timer.isPaused()) timer.start();
             playPauseBroadcast();
         }
@@ -955,7 +965,16 @@ public class MusicForegroundService extends Service {
     public void seekTo(int msec) {
         if (mp == null) return;
         mp.seekTo(msec);
-//        updateMediaSession(PlaybackStateCompat.STATE_PLAYING);
+        updateMediaSession(PlaybackStateCompat.STATE_BUFFERING);
+        updateNotification(false);
+        mp.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+                updateMediaSession(PlaybackStateCompat.STATE_PLAYING);
+                updateNotification(true);
+                mp.setOnBufferingUpdateListener(null);
+            }
+        });
     };
 
     private void playPauseBroadcast() {

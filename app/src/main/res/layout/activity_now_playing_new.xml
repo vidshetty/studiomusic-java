@@ -398,10 +398,10 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                 android:textSize="15sp"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/white"
                 android:text="0: 00"/>
             <!--                android:textColor="#FFFFFF"-->
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -410,6 +410,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="15sp"
+                android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/white"
                 android:text="0: 00"/>
 

@@ -99,6 +99,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:paddingRight="5dp"
+            android:fontFamily="@font/montserrat_regular"
             android:id="@+id/queue_each_title"/>
 
         <LinearLayout
@@ -130,6 +131,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:text="LYRICS"
                         android:textSize="7sp"
+                        android:fontFamily="@font/montserrat_regular"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
