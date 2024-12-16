@@ -14,8 +14,8 @@
     </string>
     <string name="sign_out">Sign Out</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="prod_server">https://studiomusic.app/android</string>
-    <string name="prod_server_media">https://studiomusic.app/listen</string>
+    <string name="prod_server">https://player.studiomusic.app/android</string>
+    <string name="prod_server_media">https://player.studiomusic.app/listen</string>
     <string name="linkedin_uri">https://www.linkedin.com/in/vidhatashetty/</string>
     <string name="profilecheck_continue">Continue</string>
     <string name="homescreen_title">Home</string>

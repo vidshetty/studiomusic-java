@@ -127,10 +127,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" />
-                <data android:host="studiomusic.app" />
+                <data android:host="player.studiomusic.app" />
                 <data android:pathPrefix="/"/>
                 <data android:scheme="http" />
-                <data android:host="studiomusic.app" />
+                <data android:host="player.studiomusic.app" />
                 <data android:pathPrefix="/" />
             </intent-filter>
         </activity>

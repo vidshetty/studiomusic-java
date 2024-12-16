@@ -294,7 +294,8 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> segments = uri.getPathSegments();
 
-        if (!segments.contains("player")) return;
+//        if (!segments.contains("player")) return;
+        if (!"player.studiomusic.app".equals(uri.getHost())) return;
 
         if (segments.contains("homescreen")) {
             CURRENT_SCREEN = FragmentTags.HOMESCREEN;
@@ -331,9 +332,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (segments.contains("album")) {
 
-            if (segments.size() < 3 || segments.size() > 4) return;
+            if (segments.size() < 2 || segments.size() > 3) return;
 
-            String albumId = segments.get(2);
+            String albumId = segments.get(1);
             if (albumId == null) return;
 
             CURRENT_SCREEN = FragmentTags.HOMESCREEN;
@@ -347,12 +348,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (segments.contains("track")) {
 
-            if (segments.size() < 4 || segments.size() > 5) return;
+            if (segments.size() < 3 || segments.size() > 4) return;
 
-            String albumId = segments.get(2);
+            String albumId = segments.get(1);
             if (albumId == null) return;
 
-            String trackId = segments.get(3);
+            String trackId = segments.get(2);
             if (trackId == null) return;
 
             CURRENT_SCREEN = FragmentTags.HOMESCREEN;
@@ -721,8 +722,14 @@ public class MainActivity extends AppCompatActivity {
         Fragment_AlbumView fragment = new Fragment_AlbumView();
         Bundle bundle = new Bundle();
         bundle.putString("album_id", albumId);
-        if (albumview_is_playable) bundle.putBoolean("should_play", true);
-        if (albumview_trackid != null) bundle.putString("track_id", albumview_trackid);
+        if (albumview_is_playable) {
+            bundle.putBoolean("should_play", true);
+            albumview_is_playable = false;
+        }
+        if (albumview_trackid != null) {
+            bundle.putString("track_id", albumview_trackid);
+            albumview_trackid = null;
+        }
         fragment.setArguments(bundle);
 
         Fragment top_fragment = BackStack.getTopFragment();

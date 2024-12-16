@@ -184,7 +184,7 @@ public class Common {
         String text = "Listen to the " + type + " " + album.getAlbum() + " ";
         text += "by " + album.getAlbumArtist() + " ";
         text += "only on StudioMusic ";
-        text += "https://studiomusic.app/player/album/" + album.getAlbumId();
+        text += "https://player.studiomusic.app/album/" + album.getAlbumId();
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
 
@@ -201,7 +201,7 @@ public class Common {
         String text = "Listen to the track " + track.getTitle() + " ";
         text += "by " + track.getArtist() + " ";
         text += "only on StudioMusic ";
-        text += "https://studiomusic.app/player/track/" + track.getAlbumId() + "/" + track.getTrackId();
+        text += "https://player.studiomusic.app/track/" + track.getAlbumId() + "/" + track.getTrackId();
         sendIntent.putExtra(Intent.EXTRA_TEXT, text);
         sendIntent.setType("text/plain");
 

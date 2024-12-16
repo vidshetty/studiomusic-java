@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.core:core-splashscreen:1.0.0-beta02@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/b0e8b7ce2be5302922a39a056288667f/transformed/jetified-core-splashscreen-1.0.0-beta02/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-4/b0e8b7ce2be5302922a39a056288667f/transformed/jetified-core-splashscreen-1.0.0-beta02/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-4/b0e8b7ce2be5302922a39a056288667f/transformed/jetified-core-splashscreen-1.0.0-beta02/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.9/transforms/f875a2b6be45a858d40b08b4cc514adf/transformed/jetified-core-splashscreen-1.0.0-beta02/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/8.9/transforms/f875a2b6be45a858d40b08b4cc514adf/transformed/jetified-core-splashscreen-1.0.0-beta02/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.9/transforms/f875a2b6be45a858d40b08b4cc514adf/transformed/jetified-core-splashscreen-1.0.0-beta02/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
