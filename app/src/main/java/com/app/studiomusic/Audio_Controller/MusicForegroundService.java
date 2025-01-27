@@ -537,6 +537,7 @@ public class MusicForegroundService extends Service {
 
                         JSONObject body = new JSONObject();
                         body.put("albumId", MusicForegroundService.NowPlayingData.getInstance(context).getNowPlayingTrack().getAlbumId());
+                        body.put("trackId", MusicForegroundService.NowPlayingData.getInstance(context).getNowPlayingTrack().getTrackId());
 
                         APIService.addToRecentlyPlayed(context, body);
 

@@ -61,6 +61,7 @@ public class Common {
         editor = search_history.edit();
         editor.clear();
         editor.apply();
+        SPService.CLEAR_UNIQUE_DEVICE_ID(context);
 
         context.stopService(new Intent(context, MusicForegroundService.class));
         MusicForegroundService.NowPlayingData.getInstance(context).destroyInstance();

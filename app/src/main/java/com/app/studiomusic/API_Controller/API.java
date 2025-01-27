@@ -56,6 +56,7 @@ public class API {
             deviceInfo.put("model", Build.MODEL);
             deviceInfo.put("device", Build.DEVICE);
             deviceInfo.put("brand", Build.BRAND);
+            deviceInfo.put("device_id", SPService.GET_UNIQUE_DEVICE_ID(context));
             headers.put("device-info", deviceInfo.toString());
         } catch (JSONException e) {
             e.printStackTrace();
